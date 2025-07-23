@@ -11,7 +11,7 @@ build:
 external-news-api:
     base-url: ${NEWS_API_BASE_URL:https://newsapi.org/v2}
     endpoint:
-      top-headlines: ${TOP_HEADLINES_ENDPOINT:/top-headlines}
-      everything: ${EVERYTHING_ENDPOINT:/everything}
-      sources: ${SOURCES_ENDPOINT:/top-headlines/source}
+      top-headlines: ${TOP_HEADLINES_ENDPOINT:top-headlines}
+      everything: ${EVERYTHING_ENDPOINT:everything}
+      sources: ${SOURCES_ENDPOINT:top-headlines/source}
     api-key: ${NEWS_API_KEY:}
