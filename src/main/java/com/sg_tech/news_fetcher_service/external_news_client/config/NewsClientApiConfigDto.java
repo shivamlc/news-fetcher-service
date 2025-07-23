@@ -10,14 +10,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 // records are a good choice for configuration classes as they provide a concise way to define immutable data
 
 @ConfigurationProperties(prefix = "external-news-api")
-public record NewsClientApiConfig(String baseUrl, Map<String, String> endpoints, String apiKey) {
+public record NewsClientApiConfigDto(String baseUrl, Map<String, String> endpoint, String apiKey) {
 
-    public NewsClientApiConfig {
+    public NewsClientApiConfigDto {
         if (baseUrl == null || baseUrl.isBlank()) {
             throw new IllegalArgumentException("Base URL cannot be null or blank");
-        }
-        if (apiKey == null || apiKey.isBlank()) {
-            throw new IllegalArgumentException("API Key cannot be null or blank");
         }
     }
 }

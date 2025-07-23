@@ -1,7 +1,17 @@
+spring:
+  application:
+    name: news-fetcher-service (DEV)
+    
+build:
+  info:
+    name: News Fetcher Service
+    description: A service to fetch news from external APIs
+    version: 1.0.0
+
 external-news-api:
     base-url: ${NEWS_API_BASE_URL:https://newsapi.org/v2}
     endpoint:
       top-headlines: ${TOP_HEADLINES_ENDPOINT:/top-headlines}
       everything: ${EVERYTHING_ENDPOINT:/everything}
       sources: ${SOURCES_ENDPOINT:/top-headlines/source}
-    api-key: ${NEWS_API_KEY}
+    api-key: ${NEWS_API_KEY:}
