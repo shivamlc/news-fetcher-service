@@ -3,6 +3,7 @@ package com.sg_tech.news_fetcher_service.external_news_client.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sg_tech.news_fetcher_service.external_news_client.dto.AllNewsRequestDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.NewsResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.TopHeadlineRequestDto;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ExternalNewsFetchService;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 @RestController
-@RequestMapping("/api/external/news-client")
+@RequestMapping("/api/external/news-client/api/fetch")
 public class TopHeadlinesController {
 
     private final ExternalNewsFetchService externalNewsFetchService;
@@ -27,6 +28,12 @@ public class TopHeadlinesController {
     public ResponseEntity<NewsResponseDto> getTopHeadLines(@ModelAttribute TopHeadlineRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(externalNewsFetchService.getTopHeadLines(requestDto));
+    }
+
+    @GetMapping("/all-news")
+    public ResponseEntity<NewsResponseDto> getAllNews(@ModelAttribute AllNewsRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(externalNewsFetchService.getAllNews(requestDto));
     }
 }
 

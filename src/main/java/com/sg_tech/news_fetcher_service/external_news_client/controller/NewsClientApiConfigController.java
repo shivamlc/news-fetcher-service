@@ -9,11 +9,10 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/api/external/news-client")
+@RequestMapping("/api/external/news-client/api")
 public class NewsClientApiConfigController {
 
     private final NewsClientApiConfigDto newsClientApiConfig;
@@ -22,7 +21,7 @@ public class NewsClientApiConfigController {
         this.newsClientApiConfig = newsClientApiConfig;
     }
 
-    @GetMapping("/api-config-info")
+    @GetMapping("/config-info")
     public ResponseEntity<NewsClientApiConfigDto> getNewsClientConfigInfo() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(this.newsClientApiConfig);
