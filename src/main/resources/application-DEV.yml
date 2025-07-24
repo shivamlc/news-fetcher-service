@@ -13,5 +13,5 @@ external-news-api:
     endpoint:
       top-headlines: ${TOP_HEADLINES_ENDPOINT:top-headlines}
       everything: ${EVERYTHING_ENDPOINT:everything}
-      sources: ${SOURCES_ENDPOINT:top-headlines/source}
+      sources: ${SOURCES_ENDPOINT:sources}
     api-key: ${NEWS_API_KEY:}

@@ -1,16 +1,62 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.util.UriComponentsBuilder;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceRequestDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
+import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 
-@Service
-public class SourceServiceImpl implements ISourceService {
+@Service("sourceServiceImpl")
+public class SourceServiceImpl extends BaseNewsClient implements ISourceService {
+
+    public SourceServiceImpl(NewsClientApiConfigDto newsClientApiConfig) {
+        super(newsClientApiConfig);
+    }
+
+    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, SourceRequestDto requestDto) {
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
+        .fromUriString(baseUrl)
+        .pathSegment(endpoint);
+
+
+        if(requestDto.getLanguage() != null && !requestDto.getLanguage().isBlank()) {
+        uriComponentsBuilder.queryParam("language", requestDto.getLanguage());
+        return uriComponentsBuilder;
+        }
+
+        if (requestDto.getCountry() != null && !requestDto.getCountry().isBlank()) {
+        uriComponentsBuilder.queryParam("country", requestDto.getCountry());
+        }
+        if (requestDto.getCategory() != null && !requestDto.getCategory().isBlank()) {
+        uriComponentsBuilder.queryParam("category", requestDto.getCategory());
+        }
+
+
+        return uriComponentsBuilder;
+           
+}
 
     @Override
     public SourceResponseDto fetchSources(SourceRequestDto sourceRequestDto) {
-        throw new UnsupportedOperationException("Unimplemented method 'fetchSources'");
+        String baseUrl = newsClientApiConfig.baseUrl();
+        String endpoint = newsClientApiConfig.endpoint().get("sources");
+        UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, sourceRequestDto);
+
+        String url = uriBuilder.toUriString();
+
+        System.out.println("Fetching sources from URL: " + url);
+
+        var response = restClient.get()
+                .uri(url)
+                .retrieve()
+                .body(SourceResponseDto.class);
+
+        System.out.println("Response Status: " + response.getStatus());
+
+        System.out.println("Sources: " + response.getSources().length);
+
+        return response;
     }
 }

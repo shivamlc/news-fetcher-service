@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TopHeadlineRequestDto {
+public class TopHeadlinesRequestDto {
 
     private String country;
     private String category;
