@@ -3,11 +3,15 @@ package com.sg_tech.news_fetcher_service.external_news_client.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.AllNewsRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.NewsResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.TopHeadlineRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.allNews.AllNewsRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines.TopHeadlineRequestDto;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ExternalNewsFetchService;
+import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
+import com.sg_tech.news_fetcher_service.external_news_client.service.impl.SourceServiceImpl;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,13 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 @RestController
-@RequestMapping("/api/external/news-client/api/fetch")
+@RequestMapping(path = "/api/v1/external/news-client/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class TopHeadlinesController {
 
     private final ExternalNewsFetchService externalNewsFetchService;
+    private final ISourceService sourceService;
 
-    public TopHeadlinesController(ExternalNewsFetchService externalNewsFetchService) {
+    public TopHeadlinesController(ExternalNewsFetchService externalNewsFetchService, ISourceService sourceService) {
         this.externalNewsFetchService = externalNewsFetchService;
+        this.sourceService = sourceService;
     }
 
     @GetMapping("/top-headlines")

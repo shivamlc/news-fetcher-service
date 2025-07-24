@@ -1,5 +1,7 @@
-package com.sg_tech.news_fetcher_service.external_news_client.dto;
+package com.sg_tech.news_fetcher_service.external_news_client.dto.client;
 
+
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.article.ArticleDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

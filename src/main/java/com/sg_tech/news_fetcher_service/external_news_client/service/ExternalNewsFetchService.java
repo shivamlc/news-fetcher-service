@@ -4,10 +4,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfigDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.AllNewsRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.NewsResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.TopHeadlineRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.allNews.AllNewsRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines.TopHeadlineRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
 
 @Service
 public class ExternalNewsFetchService {
