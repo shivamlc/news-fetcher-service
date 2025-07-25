@@ -5,6 +5,7 @@ import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+//TODO: Create an internal DTO for ArticleDto to suit business needs and create a mapper to map from this dto to the internal DTO.
 @Data
 @AllArgsConstructor
 public class ArticleDto {

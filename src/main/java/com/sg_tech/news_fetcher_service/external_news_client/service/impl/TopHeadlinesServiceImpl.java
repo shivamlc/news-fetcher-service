@@ -16,6 +16,7 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
         super(newsClientApiConfig);
     }
 
+    //TODO: refactor this
     private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, TopHeadlinesRequestDto requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
         .fromUriString(baseUrl)
@@ -32,21 +33,20 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
         uriComponentsBuilder.queryParam("q", requestDto.getQuery());
         }
 
-        if(requestDto.getSources() != null && !requestDto.getSources().isBlank()) {
-        uriComponentsBuilder.queryParam("sources", requestDto.getSources());
+        if(requestDto.getSources() != null && !requestDto.getSources().isEmpty()) {
+        String sources = String.join(",", requestDto.getSources());
+        uriComponentsBuilder.queryParam("sources", sources);
         return uriComponentsBuilder;
         }
 
-        if (requestDto.getCountry() != null && !requestDto.getCountry().isBlank()) {
-        uriComponentsBuilder.queryParam("country", requestDto.getCountry());
+        if (requestDto.getCountry() != null) {
+        uriComponentsBuilder.queryParam("country", requestDto.getCountry().getCode());
         }
-        if (requestDto.getCategory() != null && !requestDto.getCategory().isBlank()) {
-        uriComponentsBuilder.queryParam("category", requestDto.getCategory());
+        if (requestDto.getCategory() != null) {
+        uriComponentsBuilder.queryParam("category", requestDto.getCategory().getValue());
         }
 
-
-        return uriComponentsBuilder;
-           
+        return uriComponentsBuilder;       
 }
 
     @Override
@@ -70,5 +70,4 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
         return response;
 
     }
-
 }

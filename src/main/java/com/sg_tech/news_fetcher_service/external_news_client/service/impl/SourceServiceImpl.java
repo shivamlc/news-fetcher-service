@@ -15,27 +15,24 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
         super(newsClientApiConfig);
     }
 
+    //TODO: refactor this
     private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, SourceRequestDto requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
         .fromUriString(baseUrl)
         .pathSegment(endpoint);
 
 
-        if(requestDto.getLanguage() != null && !requestDto.getLanguage().isBlank()) {
-        uriComponentsBuilder.queryParam("language", requestDto.getLanguage());
-        return uriComponentsBuilder;
+        if(requestDto.getLanguage() != null) {
+        uriComponentsBuilder.queryParam("language", requestDto.getLanguage().getCode());
+        } 
+        if (requestDto.getCountry() != null) {
+        uriComponentsBuilder.queryParam("country", requestDto.getCountry().getCode());
+        } 
+        if (requestDto.getCategory() != null) {
+        uriComponentsBuilder.queryParam("category", requestDto.getCategory().getValue());
         }
-
-        if (requestDto.getCountry() != null && !requestDto.getCountry().isBlank()) {
-        uriComponentsBuilder.queryParam("country", requestDto.getCountry());
-        }
-        if (requestDto.getCategory() != null && !requestDto.getCategory().isBlank()) {
-        uriComponentsBuilder.queryParam("category", requestDto.getCategory());
-        }
-
 
         return uriComponentsBuilder;
-           
 }
 
     @Override
@@ -55,7 +52,7 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
 
         System.out.println("Response Status: " + response.getStatus());
 
-        System.out.println("Sources: " + response.getSources().length);
+        System.out.println("Sources: " + response.getSources().size());
 
         return response;
     }

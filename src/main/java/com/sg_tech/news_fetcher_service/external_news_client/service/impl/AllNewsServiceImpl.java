@@ -16,34 +16,60 @@ public class AllNewsServiceImpl extends BaseNewsClient implements INewsArticlesS
         super(newsClientApiConfig);
     }
 
-    
+    //TODO: refactor this
     private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, AllNewsRequestDto requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-        .fromUriString(baseUrl)
-        .pathSegment(endpoint);
+                .fromUriString(baseUrl)
+                .pathSegment(endpoint);
 
         if (requestDto.getPageSize() != null) {
-        uriComponentsBuilder.queryParam("pageSize", requestDto.getPageSize());
+            uriComponentsBuilder.queryParam("pageSize", requestDto.getPageSize());
         }
         if (requestDto.getPage() != null) {
-        uriComponentsBuilder.queryParam("page", requestDto.getPage());
+            uriComponentsBuilder.queryParam("page", requestDto.getPage());
         }
 
-        if(requestDto.getQuery() != null && !requestDto.getQuery().isBlank()) {
-        uriComponentsBuilder.queryParam("q", requestDto.getQuery());
+        if (requestDto.getQuery() != null && !requestDto.getQuery().isBlank()) {
+            uriComponentsBuilder.queryParam("q", requestDto.getQuery());
         }
 
-        if(requestDto.getSources() != null && !requestDto.getSources().isBlank()) {
-        uriComponentsBuilder.queryParam("sources", requestDto.getSources());
+        if (requestDto.getSources() != null && !requestDto.getSources().isEmpty()) {
+            String sources = String.join(",", requestDto.getSources());
+            uriComponentsBuilder.queryParam("sources", sources);
+        }
+
+        if (requestDto.getSources() != null && !requestDto.getDomains().isEmpty()) {
+            String domains = String.join(",", requestDto.getDomains());
+            uriComponentsBuilder.queryParam("domains", domains);
+        }
+
+        if (requestDto.getSources() != null && !requestDto.getExcludeDomains().isEmpty()) {
+            String excludeDomains = String.join(",", requestDto.getExcludeDomains());
+            uriComponentsBuilder.queryParam("excludeDomains", excludeDomains);
+        }
+
+        if (requestDto.getFromDate() != null) {
+
+            uriComponentsBuilder.queryParam("from", requestDto.getFromDate());
+        }
+
+         if (requestDto.getToDate() != null) {
+
+            uriComponentsBuilder.queryParam("to", requestDto.getToDate());
+        }
+
+         if (requestDto.getSortBy() != null) {
+
+            uriComponentsBuilder.queryParam("sortBy", requestDto.getSortBy().getValue());
         }
 
         return uriComponentsBuilder;
-           
-}
+
+    }
 
     @Override
     public NewsResponseDto getNewsArticles(AllNewsRequestDto newsRequestDto) {
-      String baseUrl = newsClientApiConfig.baseUrl();
+        String baseUrl = newsClientApiConfig.baseUrl();
         String endpoint = newsClientApiConfig.endpoint().get("everything");
         UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, newsRequestDto);
 

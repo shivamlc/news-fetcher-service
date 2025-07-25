@@ -50,13 +50,13 @@ public class NewsClientController {
     }
 
     @GetMapping("/all-news")
-    public ResponseEntity<NewsResponseDto> getAllNews(@ModelAttribute AllNewsRequestDto requestDto) {
+    public ResponseEntity<NewsResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(allNewsServiceImpl.getNewsArticles(requestDto));
     }
 
     @GetMapping("/all-sources")
-    public ResponseEntity<SourceResponseDto> getAllSources(@ModelAttribute SourceRequestDto requestDto) {
+    public ResponseEntity<SourceResponseDto> getAllSources(@Valid @ModelAttribute SourceRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(sourceServiceImpl.fetchSources(requestDto));
     }

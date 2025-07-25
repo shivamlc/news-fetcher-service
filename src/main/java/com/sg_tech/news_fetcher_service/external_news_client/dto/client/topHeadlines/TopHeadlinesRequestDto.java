@@ -1,5 +1,11 @@
 package com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines;
 
+import java.util.List;
+
+import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.Category;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.Country;
+
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -10,14 +16,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class TopHeadlinesRequestDto {
 
-    @NotNull(message = "Country cannot be null for fetching top headlines")
-    private String country;
+    private Country country; // either of country or sources must be specified
 
-    private String category; // Optional, can be null if not specified
+    private Category category; // Optional, can be null if not specified
 
+    @Max(value = 500, message = "Query size must be between 1 and 500")
     private String query; // Optional, can be null if not specified
 
-    private String sources; // Optional, can be null if not specified
+    private List<String> sources; // Optional, can be null if not specified
 
     /*
      * If you use @ModelAttribute for query/form parameters, it is required to use wrapper types (Integer instead of int) for fields that may be missing or optional.
@@ -25,6 +31,7 @@ public class TopHeadlinesRequestDto {
      */
 
     @Positive
+    @Max(value = 100, message = "Page size cannot exceed 100")
     private Integer pageSize; // Optional, can be null if not specified
 
     @Positive
