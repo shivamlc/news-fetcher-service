@@ -12,6 +12,8 @@ import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticl
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.impl.SourceServiceImpl;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -47,6 +49,15 @@ public class NewsClientController {
         this.topHeadlinesServiceImpl = topHeadlinesServiceImpl;
         this.sourceServiceImpl = sourceServiceImpl;
     }
+    /**
+     * This endpoint fetches top headlines based on the provided request parameters.
+     * 
+     * @param requestDto The request parameters for fetching top headlines.
+     * @return A ResponseEntity containing the NewsResponseDto with the top headlines.
+     */
+    @Tag(name = "Top Headlines")
+    @Operation(summary = "Fetch Top Headlines", description = "This endpoint fetches top headlines based on the provided request parameters.")
+    @ApiResponse(responseCode = "200", description = "This indicates that top headlines fetched successfully.")
 
     @GetMapping("/top-headlines")
     public ResponseEntity<NewsResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequestDto requestDto) {
@@ -54,11 +65,30 @@ public class NewsClientController {
                 .body(topHeadlinesServiceImpl.getNewsArticles(requestDto));
     }
 
+    /**
+     * This endpoint fetches all news articles based on the provided request parameters.
+     * 
+     * @param requestDto The request parameters for fetching all news articles.
+     * @return A ResponseEntity containing the NewsResponseDto with all news articles.
+     */
+    @Tag(name = "All News")
+    @Operation(summary = "Fetch All News Articles", description = "This endpoint fetches all news articles based on the provided request parameters.")
+    @ApiResponse(responseCode = "200", description = "This indicates that all news articles fetched successfully.")
+
     @GetMapping("/all-news")
     public ResponseEntity<NewsResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(allNewsServiceImpl.getNewsArticles(requestDto));
     }
+    /**
+     * This endpoint fetches all news sources based on the provided request parameters.
+     * 
+     * @param requestDto The request parameters for fetching news sources.
+     * @return A ResponseEntity containing the SourceResponseDto with all news sources.
+     */
+    @Tag(name = "News Sources")
+    @Operation(summary = "Fetch All News Sources", description = "This endpoint fetches all news sources based on the provided request parameters.")
+    @ApiResponse(responseCode = "200", description = "This indicates that all news sources fetched successfully.")
 
     @GetMapping("/all-sources")
     public ResponseEntity<SourceResponseDto> getAllSources(@Valid @ModelAttribute SourceRequestDto requestDto) {

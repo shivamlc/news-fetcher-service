@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
-import com.sg_tech.news_fetcher_service.external_news_client.service.NewsClientApiConfigService;
+import com.sg_tech.news_fetcher_service.external_news_client.service.impl.NewsClientApiConfigServiceImpl;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.HttpStatus;
@@ -37,20 +39,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/api/v1/external/news-client/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class NewsClientApiConfigController {
 
-    private final NewsClientApiConfigService newsClientApiConfigService;
+    private final NewsClientApiConfigServiceImpl newsClientApiConfigService;
 
-    public NewsClientApiConfigController(NewsClientApiConfigService newsClientApiConfigService) {
+    public NewsClientApiConfigController(NewsClientApiConfigServiceImpl newsClientApiConfigService) {
         this.newsClientApiConfigService = newsClientApiConfigService;
     }
 
     /**
-     * This endpoint returns the configuration information for the external news
+     * This endpoint fetches the configuration information for the external news
      * client API.
-     * It provides details like base URL, endpoints, and API key.
+     * It provides details like base URL, endpoints, etc.
      *
      * @return ResponseEntity containing NewsClientApiConfigDto with configuration
      *         details.
      */
+    @Tag(name = "External News Client API Config")
+    @Operation(summary = "Fetch External News Client API Config", description = "This endpoint fetches the configuration information for the external news client API. It provides details like base URL, endpoints, etc.")
+    @ApiResponse(responseCode = "200", description = "This indicates that external news client API config fetched successfully.")
 
     @GetMapping("/config-info")
     public ResponseEntity<ApiResponseDto<NewsClientApiConfigDto>> getNewsClientConfigInfo() {
