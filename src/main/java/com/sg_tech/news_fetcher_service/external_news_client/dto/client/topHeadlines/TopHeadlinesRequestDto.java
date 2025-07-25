@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.Category;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.Country;
-
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
