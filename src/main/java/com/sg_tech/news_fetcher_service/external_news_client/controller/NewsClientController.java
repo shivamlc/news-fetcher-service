@@ -11,9 +11,13 @@ import com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadl
 import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.impl.SourceServiceImpl;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
 @RequestMapping(path = "/api/v1/external/news-client/api/fetch", produces = { MediaType.APPLICATION_JSON_VALUE })
+@Validated
 public class NewsClientController {
 
 
@@ -39,7 +44,7 @@ public class NewsClientController {
     }
 
     @GetMapping("/top-headlines")
-    public ResponseEntity<NewsResponseDto> getTopHeadLines(@ModelAttribute TopHeadlinesRequestDto requestDto) {
+    public ResponseEntity<NewsResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(topHeadlinesServiceImpl.getNewsArticles(requestDto));
     }
