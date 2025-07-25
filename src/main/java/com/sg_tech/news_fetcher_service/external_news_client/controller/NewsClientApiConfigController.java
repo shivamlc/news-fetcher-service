@@ -53,7 +53,6 @@ public class NewsClientApiConfigController {
      * @return ResponseEntity containing NewsClientApiConfigDto with configuration
      *         details.
      */
-    @Tag(name = "External News Client API Config")
     @Operation(summary = "Fetch External News Client API Config", description = "This endpoint fetches the configuration information for the external news client API. It provides details like base URL, endpoints, etc.")
     @ApiResponse(responseCode = "200", description = "This indicates that external news client API config fetched successfully.")
 

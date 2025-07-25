@@ -55,7 +55,6 @@ public class NewsClientController {
      * @param requestDto The request parameters for fetching top headlines.
      * @return A ResponseEntity containing the NewsResponseDto with the top headlines.
      */
-    @Tag(name = "Top Headlines")
     @Operation(summary = "Fetch Top Headlines", description = "This endpoint fetches top headlines based on the provided request parameters.")
     @ApiResponse(responseCode = "200", description = "This indicates that top headlines fetched successfully.")
 
@@ -71,7 +70,6 @@ public class NewsClientController {
      * @param requestDto The request parameters for fetching all news articles.
      * @return A ResponseEntity containing the NewsResponseDto with all news articles.
      */
-    @Tag(name = "All News")
     @Operation(summary = "Fetch All News Articles", description = "This endpoint fetches all news articles based on the provided request parameters.")
     @ApiResponse(responseCode = "200", description = "This indicates that all news articles fetched successfully.")
 
@@ -86,7 +84,6 @@ public class NewsClientController {
      * @param requestDto The request parameters for fetching news sources.
      * @return A ResponseEntity containing the SourceResponseDto with all news sources.
      */
-    @Tag(name = "News Sources")
     @Operation(summary = "Fetch All News Sources", description = "This endpoint fetches all news sources based on the provided request parameters.")
     @ApiResponse(responseCode = "200", description = "This indicates that all news sources fetched successfully.")
 
