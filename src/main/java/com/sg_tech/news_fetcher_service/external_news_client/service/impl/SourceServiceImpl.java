@@ -4,14 +4,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceRequestDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
+import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 
 @Service("sourceServiceImpl")
 public class SourceServiceImpl extends BaseNewsClient implements ISourceService {
 
-    public SourceServiceImpl(NewsClientApiConfigDto newsClientApiConfig) {
+    public SourceServiceImpl(NewsClientApiConfig newsClientApiConfig) {
         super(newsClientApiConfig);
     }
 

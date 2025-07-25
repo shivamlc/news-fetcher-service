@@ -12,6 +12,7 @@ import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticl
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.impl.SourceServiceImpl;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 
-
+@Tag
+(
+    name = "Rest api for fetching news articles and sources from external news client (News API)", 
+    description = "Provides endpoints for fetching news sources, all news articles and top headlines."
+)
 @RestController
 @RequestMapping(path = "/api/v1/external/news-client/api/fetch", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated

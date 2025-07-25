@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
+import com.sg_tech.news_fetcher_service.external_news_client.service.NewsClientApiConfigService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Tag
+(
+    name = "Rest api for external news client (News API) configs ", 
+    description = "Provides endpoint for fetching external news client API configuration details."
+)
 @RestController
 /**
  * @RequestMapping(path = "/api/v1/external/news-client/api") dpecifies prefix
@@ -29,10 +37,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/api/v1/external/news-client/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class NewsClientApiConfigController {
 
-    private final NewsClientApiConfigDto newsClientApiConfig;
+    private final NewsClientApiConfigService newsClientApiConfigService;
 
-    public NewsClientApiConfigController(NewsClientApiConfigDto newsClientApiConfig) {
-        this.newsClientApiConfig = newsClientApiConfig;
+    public NewsClientApiConfigController(NewsClientApiConfigService newsClientApiConfigService) {
+        this.newsClientApiConfigService = newsClientApiConfigService;
     }
 
     /**
@@ -49,6 +57,6 @@ public class NewsClientApiConfigController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponseDto<NewsClientApiConfigDto>(HttpStatus.OK,
                         "External news api client config fetched successfully.",
-                        newsClientApiConfig));
+                        newsClientApiConfigService.getNewsClientApiConfig()));
     }
 }

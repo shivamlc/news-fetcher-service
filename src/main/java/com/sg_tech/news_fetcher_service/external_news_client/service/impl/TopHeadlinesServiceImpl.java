@@ -5,14 +5,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines.TopHeadlinesRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
+import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
 
 @Service("topHeadlinesServiceImpl")
 public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArticlesService<TopHeadlinesRequestDto> {
 
-    public TopHeadlinesServiceImpl(NewsClientApiConfigDto newsClientApiConfig) {
+    public TopHeadlinesServiceImpl(NewsClientApiConfig newsClientApiConfig) {
         super(newsClientApiConfig);
     }
 
