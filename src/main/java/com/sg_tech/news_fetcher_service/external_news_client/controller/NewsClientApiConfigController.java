@@ -2,12 +2,15 @@ package com.sg_tech.news_fetcher_service.external_news_client.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
 import com.sg_tech.news_fetcher_service.external_news_client.service.impl.NewsClientApiConfigServiceImpl;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.HttpStatus;
@@ -54,7 +57,23 @@ public class NewsClientApiConfigController {
      *         details.
      */
     @Operation(summary = "Fetch External News Client API Config", description = "This endpoint fetches the configuration information for the external news client API. It provides details like base URL, endpoints, etc.")
-    @ApiResponse(responseCode = "200", description = "This indicates that external news client API config fetched successfully.")
+    @ApiResponses
+    (
+        value = {
+            @ApiResponse(responseCode = "200", description = "This indicates that configs were fetched successfully."),
+            @ApiResponse(responseCode = "400", description = "Bad Request - Configs are missing or invalid."),
+            @ApiResponse
+            (
+                responseCode = "500", 
+                description = "Internal Server Error - An unexpected error occurred.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ApiErrorDto.class)
+                )
+            )
+        }
+    )
 
     @GetMapping("/config-info")
     public ResponseEntity<ApiResponseDto<NewsClientApiConfigDto>> getNewsClientConfigInfo() {
