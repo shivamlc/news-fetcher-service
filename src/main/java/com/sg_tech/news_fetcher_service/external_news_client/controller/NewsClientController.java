@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.allNews.AllNewsRequestDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceRequestDto;
@@ -123,8 +124,26 @@ public class NewsClientController {
         @ApiResponses
     (
         value = {
-            @ApiResponse(responseCode = "200", description = "This indicates that top headlines fetched successfully."),
-            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid request parameters."),
+            @ApiResponse
+            (
+                responseCode = "200", 
+                description = "This indicates that sources were fetched successfully.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = SourceResponseDto.class)
+                )
+            ),
+            @ApiResponse
+            (
+                responseCode = "400", 
+                description = "Bad Request - Invalid request parameters.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ApiErrorDto.class)
+                )
+            ),
             @ApiResponse
             (
                 responseCode = "500", 

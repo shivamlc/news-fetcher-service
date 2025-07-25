@@ -23,8 +23,7 @@ public class ApiResponseDto<T> {
     @Schema
     (
         name = "status", 
-        description = "HTTP status code of the response.",
-        example = "200" // Example value for status
+        description = "HTTP status code of the response."
     )
     private HttpStatus status;
 

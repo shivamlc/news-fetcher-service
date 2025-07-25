@@ -42,8 +42,7 @@ public class ApiErrorDto {
     @Schema
     (
         name = "errorCode", 
-        description = "HTTP status code representing the error.",
-        example = "404" // Example value for errorCode
+        description = "HTTP status code representing the error."
     )
     private HttpStatus errorCode; 
 
