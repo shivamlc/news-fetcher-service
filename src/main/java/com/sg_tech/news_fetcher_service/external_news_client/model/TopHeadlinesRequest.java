@@ -44,7 +44,7 @@ public class TopHeadlinesRequest {
         example = "technology" // Example value for query
     )
     @Nullable
-    @Size (min=1, max = 500, message = "Query size must be between 1 and 500")
+    @Size (min=0, max = 500, message = "Query size must be between 1 and 500")
     private String query; // Optional, can be null if not specified
 
    @ArraySchema

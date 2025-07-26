@@ -27,7 +27,7 @@ public class AllNewsRequest {
         description = "Query string to search for specific keywords in the news articles. Required field.",
         example = "technology" // Example value for query
     )
-    @Size (min=1, max = 500, message = "Query size must be between 1 and 500")
+    @Size (min=0, max = 500, message = "Query size must be between 1 and 500")
     @NotBlank(message = "Query cannot be blank")
     private String query;
 
