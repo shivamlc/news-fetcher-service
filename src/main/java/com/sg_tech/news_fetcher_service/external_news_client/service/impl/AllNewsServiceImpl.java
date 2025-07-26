@@ -6,10 +6,10 @@ import com.sg_tech.news_fetcher_service.external_news_client.model.AllNewsReques
 import com.sg_tech.news_fetcher_service.external_news_client.model.ClientNewsResponse;
 import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
-import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
+import com.sg_tech.news_fetcher_service.external_news_client.service.IAllNewsArticlesService;
 
 // @Service("allNewsServiceImpl")
-public class AllNewsServiceImpl extends BaseNewsClient implements INewsArticlesService<AllNewsRequest> {
+public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticlesService {
 
     public AllNewsServiceImpl(NewsClientApiConfig newsClientApiConfig) {
         super(newsClientApiConfig);

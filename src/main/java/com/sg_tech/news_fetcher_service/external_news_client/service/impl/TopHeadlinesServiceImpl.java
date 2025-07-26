@@ -7,10 +7,10 @@ import com.sg_tech.news_fetcher_service.external_news_client.model.ClientNewsRes
 import com.sg_tech.news_fetcher_service.external_news_client.model.TopHeadlinesRequest;
 import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
-import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
+import com.sg_tech.news_fetcher_service.external_news_client.service.ITopHeadlinesService;
 
 @Service("topHeadlinesServiceImpl")
-public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArticlesService<TopHeadlinesRequest> {
+public class TopHeadlinesServiceImpl extends BaseNewsClient implements ITopHeadlinesService {
 
     public TopHeadlinesServiceImpl(NewsClientApiConfig newsClientApiConfig) {
         super(newsClientApiConfig);
@@ -58,7 +58,7 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
      * @return ClientNewsResponse containing the list of top headlines.
      */
     @Override
-    public ClientNewsResponse getNewsArticles(TopHeadlinesRequest newsRequestDto) {
+    public ClientNewsResponse getTopNewsHeadlines(TopHeadlinesRequest newsRequestDto) {
         String baseUrl = newsClientApiConfig.baseUrl();
         String endpoint = newsClientApiConfig.endpoint().get("top-headlines");
         UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, newsRequestDto);
