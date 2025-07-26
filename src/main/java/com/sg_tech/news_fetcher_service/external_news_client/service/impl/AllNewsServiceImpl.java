@@ -10,7 +10,7 @@ import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientAp
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.IAllNewsArticlesService;
 
-@Service("allNewsServiceImpl")
+ @Service("allNewsServiceImpl")
 public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticlesService {
 
     public AllNewsServiceImpl(NewsClientApiConfig newsClientApiConfig) {
