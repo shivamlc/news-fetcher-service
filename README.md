@@ -73,13 +73,24 @@ This project is a Spring Boot REST API service that connects to external news AP
 ## Getting Started
 1. Clone the repository
 2. Configure API keys and endpoints in the configuration files
-3. Build and run the Spring Boot application
-4. Access REST endpoints for news, sources, and headlines
+3. Build and run the Spring Boot application. Application runs at `http://localhost:8080`
+4. Access Swagger doc for all the REST endpoints for news, sources, and headlines at `http://localhost:8080/swagger-ui/index.html#/`
 
 ## Example Endpoints
-- `/api/news/sources` — Get all news sources
-- `/api/news/all` — Get all news articles
-- `/api/news/headlines` — Get top headlines
+- `/api/v1/external/news-client/api/fetch/all-sources` — Get all news sources
+- `/api/v1/external/news-client/api/fetch/all-news` — Get all news articles
+- `/api/v1/external/news-client/api/fetch/top-headlines` — Get top headlines
+
+### How to run the application locally in vs code 
+
+- Create .env file and put ```NEWS_API_KEY=<YOUR_NEWS_API_KEY>``` in the .env file
+- Export the env vars to the terminal using:
+```export $(grep -v '^#' .env | xargs)```
+- Run the spring boot app in DEV profile: 
+```./mvnw spring-boot:run -Dspring-boot.run.profiles=dev```
+
+- Usefule tip: to kill an already running instance on port 8080, use:
+```lsof -ti tcp:8080 | xargs kill -9```
 
 ## Conclusion
 This project demonstrates a robust, extensible, and modern approach to building a news aggregation service using Spring Boot, with advanced LLM capabilities enabled by MCP. It follows best practices in configuration, dependency management, error handling, and modular design.
