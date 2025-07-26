@@ -4,33 +4,6 @@ spring:
 
 server:
   port: ${SERVER_PORT:8080}
-
-  ai:
-    mcp:
-      server:
-        type: SYNC
-        version: 1.0.0
-        stdio: true
-        capablities:
-            resource: true
-            prompt: true
-            tool: true
-            completion: true
-        sse-endpoint: ${MCP_SSE_ENDPOINT:http://localhost:8080/mcp/sse}
-        sse-message-endpoint: ${MCP_SSE_MESSAGE_ENDPOINT:http://localhost:8080/mcp/sse/message}
-
-
-  mcp:
-    server:
-      name: NewsFetcherMCPServer (DEV)
-      
-
-#   main:
-#     web-application-type: servlet
-#     banner-mode: off
-# logging:
-#   pattern:
-#     console: 
     
 build:
   info:

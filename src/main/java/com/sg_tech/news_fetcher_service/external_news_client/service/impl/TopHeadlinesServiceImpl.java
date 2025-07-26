@@ -1,6 +1,5 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 
-import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -58,14 +57,6 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
      * @param newsRequestDto The request parameters for fetching top headlines.
      * @return ClientNewsResponse containing the list of top headlines.
      */
-    @Tool(
-        name = "getTopHeadlines",
-        description = " Fetches top headlines based on the provided request parameters in TopHeadlinesRequest. " +
-                      " This method constructs the request URL, sends the request to the external news API, " +
-                      " and returns the response containing the top headlines." +
-                      " The request to the external news api must not have 'country' and 'category' together with 'sources'. The request can have addiitonal optioal parameters like 'query', 'pageSize', and 'page'. " +
-                      " The response will contain the top headlines based on the specified parameters."
-    )
     @Override
     public ClientNewsResponse getNewsArticles(TopHeadlinesRequest newsRequestDto) {
         String baseUrl = newsClientApiConfig.baseUrl();
