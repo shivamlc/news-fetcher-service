@@ -1,5 +1,7 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sg_tech.news_fetcher_service.external_news_client.model.AllNewsRequest;
@@ -8,7 +10,7 @@ import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientAp
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.IAllNewsArticlesService;
 
-// @Service("allNewsServiceImpl")
+@Service("allNewsServiceImpl")
 public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticlesService {
 
     public AllNewsServiceImpl(NewsClientApiConfig newsClientApiConfig) {
@@ -65,6 +67,15 @@ public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticl
         return uriComponentsBuilder;
 
     }
+
+    @Tool(
+        name = "get all news articles using a query",
+        description = "Fetches all news articles based on the provided request parameters in AllNewsRequest. " +
+                      "This method constructs the request URL, sends the request to the external news API, " +
+                      "and returns the response containing the news articles. " +
+                      "The request has mandatory 'query' param can have optional parameters like 'sources', 'domains', 'excludeDomains', 'fromDate', 'toDate', and 'sortBy'. " +
+                      "The response will contain the news articles based on the specified parameters."
+    )
 
     /**
      * Fetches all news articles based on the provided request parameters in AllNewsRequest.

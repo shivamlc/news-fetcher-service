@@ -17,15 +17,15 @@ public class NewsClientApiConfigServiceImpl implements INewsClientConfigService 
         this.newsClientApiConfig = newsClientApiConfig;
     }
 
+    @Tool(
+        name = "get external news client API configuration",
+        description = "Fetches the News Client API configuration details."
+    )
     /**
      * Retrieves the NewsClientApiConfig as a DTO.
      *
      * @return NewsClientApiConfigDto containing the API configuration details.
      */
-    @Tool(
-        name = "getNewsClientApiConfig",
-        description = "Fetches the News Client API configuration details."
-    )
     public NewsClientApiConfigDto getNewsClientApiConfig() {
        return NewsClientConfigMapper.mapToDto(newsClientApiConfig, new NewsClientApiConfigDto());
     }

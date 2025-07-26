@@ -1,5 +1,6 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,6 +49,12 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements ITopHeadl
 
         return uriComponentsBuilder;       
 }
+@Tool(
+        name = "fetch top headlines using country, language, and category or news sources",
+        description = "Fetches top headlines based on the provided request parameters in TopHeadlinesRequest. " +
+                      "This method constructs the request URL, sends the request to the external news API, " +
+                      "and returns the response containing the top headlines."
+    )
 
     /**
      * Fetches top headlines based on the provided request parameters in TopHeadlinesRequest.

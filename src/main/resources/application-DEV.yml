@@ -2,6 +2,18 @@ spring:
   application:
     name: news-fetcher-service (DEV)
 
+  ai:
+    mcp:
+      server: 
+        name: news-fetcher-service-mcp
+        version: 1.0.0
+
+  main:
+    banner-mode: off 
+  logging:
+      file:
+        name: news-fetcher-service.log
+                
 server:
   port: ${SERVER_PORT:8080}
     

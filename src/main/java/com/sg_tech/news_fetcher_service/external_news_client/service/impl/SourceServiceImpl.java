@@ -1,5 +1,6 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,6 +37,12 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
         return uriComponentsBuilder;
 }
 
+    @Tool(
+        name = "fetch news sources using country, language, and category",
+        description = "Fetches news sources based on the provided request parameters in SourceRequest. " +
+                      "This method constructs the request URL, sends the request to the external news API, " +
+                      "and returns the response containing the sources."
+    )   
     /**
      * Fetches sources based on the provided request parameters in SourceRequest.
      * This method constructs the request URL, sends the request to the external news API,
