@@ -1,10 +1,10 @@
-package com.sg_tech.news_fetcher_service.external_news_client.dto.client.allNews;
+package com.sg_tech.news_fetcher_service.external_news_client.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.SearchArea;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.SortBy;
+import com.sg_tech.news_fetcher_service.external_news_client.enums.SearchArea;
+import com.sg_tech.news_fetcher_service.external_news_client.enums.SortBy;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
@@ -15,10 +15,10 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Schema(name = "AllNewsRequest", description = "Request DTO for fetching all news from the news client API.")
+@Schema(name = "AllNewsRequest", description = "Client model for fetching all news from the news client API.")
 @Data
 @AllArgsConstructor
-public class AllNewsRequestDto {
+public class AllNewsRequest {
 
     @Schema
     (

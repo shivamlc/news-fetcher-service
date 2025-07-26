@@ -1,4 +1,4 @@
-package com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources;
+package com.sg_tech.news_fetcher_service.external_news_client.model;
 
 import java.util.List;
 
@@ -9,12 +9,12 @@ import lombok.Data;
 @Schema
 (
     name = "NewsSourceResponse", 
-    description = "Response DTO for presenting news sources obtained from the news client API."
+    description = "Client model for presenting news sources obtained from the news client API."
 )
 // TODO: Replace List<SourceDto> with internal DTO for List<SourceDto> to suit business needs.
 @Data
 @AllArgsConstructor
-public class SourceResponseDto {
+public class SourceResponse {
     @Schema
     (
         name = "status", 
@@ -29,6 +29,6 @@ public class SourceResponseDto {
         description = "List of news sources obtained from the news client API.",
         example = "[{\"id\": \"abc-news\", \"name\": \"ABC News\", \"description\": \"Latest news from ABC.\", \"url\": \"https://abcnews.go.com\", \"category\": \"general\", \"language\": \"en\", \"country\": \"us\"}]" // Example value for sources
     )
-    private List<SourceDto> sources;
+    private List<Source> sources;
 }
 

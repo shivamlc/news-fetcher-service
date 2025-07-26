@@ -3,8 +3,7 @@ package com.sg_tech.news_fetcher_service.external_news_client.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.config.NewsClientApiConfigDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.NewsClientConfigApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.service.impl.NewsClientApiConfigServiceImpl;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,8 +59,26 @@ public class NewsClientApiConfigController {
     @ApiResponses
     (
         value = {
-            @ApiResponse(responseCode = "200", description = "This indicates that configs were fetched successfully."),
-            @ApiResponse(responseCode = "400", description = "Bad Request - Configs are missing or invalid."),
+            @ApiResponse
+            (
+                responseCode = "200",
+                description = "This indicates that configs were fetched successfully.",
+                 content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = NewsClientConfigApiResponseDto.class)
+                )
+            ),
+            @ApiResponse
+            (
+                responseCode = "400", 
+                description = "Bad Request - Invalid request parameters.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ApiErrorDto.class)
+                )
+            ),
             @ApiResponse
             (
                 responseCode = "500", 
@@ -76,9 +93,9 @@ public class NewsClientApiConfigController {
     )
 
     @GetMapping("/config-info")
-    public ResponseEntity<ApiResponseDto<NewsClientApiConfigDto>> getNewsClientConfigInfo() {
+    public ResponseEntity<NewsClientConfigApiResponseDto> getNewsClientConfigInfo() {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponseDto<NewsClientApiConfigDto>(HttpStatus.OK,
+                .body(new NewsClientConfigApiResponseDto(HttpStatus.OK,
                         "External news api client config fetched successfully.",
                         newsClientApiConfigService.getNewsClientApiConfig()));
     }

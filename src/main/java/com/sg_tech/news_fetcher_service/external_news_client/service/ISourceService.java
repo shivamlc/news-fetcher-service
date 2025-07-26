@@ -1,7 +1,7 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.model.SourceRequest;
+import com.sg_tech.news_fetcher_service.external_news_client.model.SourceResponse;
 
 public interface ISourceService {
 
@@ -14,6 +14,6 @@ public interface ISourceService {
      * @param country  the country of news sources
      * @return a SourceResponseDto containing the status and an array of SourceDto objects
      */
-    SourceResponseDto fetchSources(SourceRequestDto sourceRequestDto);
+    SourceResponse fetchSources(SourceRequest sourceRequestDto);
 
 }

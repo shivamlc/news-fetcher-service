@@ -16,8 +16,8 @@ import lombok.Data;
  */
 @Schema
 (
-    name = "ApiError", 
-    description = "DTO for API error responses, encapsulating error details returned by the API."
+    name = "ApiErrorDto", 
+    description = "Dto for API error responses, encapsulating error details returned by the API."
 )
 @Data
 @AllArgsConstructor
@@ -35,7 +35,7 @@ public class ApiErrorDto {
     (
         name = "errorMessages", 
         description = "Key-value pair of error type and list of errors.",
-        example = "error: [Resource not found]" // Example value for errorMessage
+        example = "error: [error_description]" // Example value for errorMessage
     )
     private Map<String,List<String>> errorMessages;
 

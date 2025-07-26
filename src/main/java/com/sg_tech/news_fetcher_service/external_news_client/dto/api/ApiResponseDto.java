@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Generic API response DTO to standardize the structure of API responses.
@@ -13,8 +14,8 @@ import lombok.Data;
  */
 @Schema
 (
-    name = "ApiResponse", 
-    description = "Generic API response DTO to standardize the structure of API responses."
+    name = "ApiResponseDto", 
+    description = "Generic API response Dto to standardize the structure of API responses."
 )
 @Data
 @AllArgsConstructor
@@ -38,8 +39,7 @@ public class ApiResponseDto<T> {
     @Schema
     (
         name = "data", 
-        description = "Data contained in the response, can be any type.",
-        example = "{ \"key\": \"value\" }" // Example value for data
+        description = "Data contained in the response, can be any type."
         
     )
     private T data; // Generic type to hold any data structure

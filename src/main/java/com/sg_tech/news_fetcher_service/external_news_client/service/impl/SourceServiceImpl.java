@@ -2,8 +2,9 @@ package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceResponseDto;
+
+import com.sg_tech.news_fetcher_service.external_news_client.model.SourceRequest;
+import com.sg_tech.news_fetcher_service.external_news_client.model.SourceResponse;
 import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
@@ -16,7 +17,7 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
     }
 
     //TODO: refactor this
-    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, SourceRequestDto requestDto) {
+    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, SourceRequest requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
         .fromUriString(baseUrl)
         .pathSegment(endpoint);
@@ -36,7 +37,7 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
 }
 
     @Override
-    public SourceResponseDto fetchSources(SourceRequestDto sourceRequestDto) {
+    public SourceResponse fetchSources(SourceRequest sourceRequestDto) {
         String baseUrl = newsClientApiConfig.baseUrl();
         String endpoint = newsClientApiConfig.endpoint().get("sources");
         UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, sourceRequestDto);
@@ -48,7 +49,7 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
         var response = restClient.get()
                 .uri(url)
                 .retrieve()
-                .body(SourceResponseDto.class);
+                .body(SourceResponse.class);
 
         System.out.println("Response Status: " + response.getStatus());
 

@@ -3,21 +3,21 @@ package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines.TopHeadlinesRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.model.ClientNewsResponse;
+import com.sg_tech.news_fetcher_service.external_news_client.model.TopHeadlinesRequest;
 import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
 
 @Service("topHeadlinesServiceImpl")
-public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArticlesService<TopHeadlinesRequestDto> {
+public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArticlesService<TopHeadlinesRequest> {
 
     public TopHeadlinesServiceImpl(NewsClientApiConfig newsClientApiConfig) {
         super(newsClientApiConfig);
     }
 
     //TODO: refactor this
-    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, TopHeadlinesRequestDto requestDto) {
+    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, TopHeadlinesRequest requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
         .fromUriString(baseUrl)
         .pathSegment(endpoint);
@@ -50,7 +50,7 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
 }
 
     @Override
-    public NewsResponseDto getNewsArticles(TopHeadlinesRequestDto newsRequestDto) {
+    public ClientNewsResponse getNewsArticles(TopHeadlinesRequest newsRequestDto) {
         String baseUrl = newsClientApiConfig.baseUrl();
         String endpoint = newsClientApiConfig.endpoint().get("top-headlines");
         UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, newsRequestDto);
@@ -62,7 +62,7 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements INewsArti
         var response = restClient.get()
                 .uri(url)
                 .retrieve()
-                .body(NewsResponseDto.class);
+                .body(ClientNewsResponse.class);
 
         System.out.println("Response Status: " + response.getStatus());
         System.out.println("Total Results: " + response.getTotalResults());

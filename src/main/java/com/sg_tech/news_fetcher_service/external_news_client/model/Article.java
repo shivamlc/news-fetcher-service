@@ -1,6 +1,4 @@
-package com.sg_tech.news_fetcher_service.external_news_client.dto.client.article;
-
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceDto;
+package com.sg_tech.news_fetcher_service.external_news_client.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -9,19 +7,19 @@ import lombok.Data;
 @Schema
 (
     name = "Article", 
-    description = "DTO representing a news article obtained from the news client API."
+    description = "Client model representing a news article obtained from the news client API."
 )
 //TODO: Create an internal DTO for ArticleDto to suit business needs and create a mapper to map from this dto to the internal DTO.
 @Data
 @AllArgsConstructor
-public class ArticleDto {
+public class Article {
     @Schema
     (
         name = "source", 
         description = "Source of the news article.",
         example = "{\"id\": \"abc-news\", \"name\": \"ABC News\"}" // Example value for source
     )
-    private SourceDto source;
+    private Source source;
 
     @Schema
     (

@@ -3,21 +3,21 @@ package com.sg_tech.news_fetcher_service.external_news_client.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.allNews.AllNewsRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.model.AllNewsRequest;
+import com.sg_tech.news_fetcher_service.external_news_client.model.ClientNewsResponse;
 import com.sg_tech.news_fetcher_service.external_news_client.config.NewsClientApiConfig;
 import com.sg_tech.news_fetcher_service.external_news_client.service.BaseNewsClient;
 import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
 
 @Service("allNewsServiceImpl")
-public class AllNewsServiceImpl extends BaseNewsClient implements INewsArticlesService<AllNewsRequestDto> {
+public class AllNewsServiceImpl extends BaseNewsClient implements INewsArticlesService<AllNewsRequest> {
 
     public AllNewsServiceImpl(NewsClientApiConfig newsClientApiConfig) {
         super(newsClientApiConfig);
     }
 
     //TODO: refactor this
-    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, AllNewsRequestDto requestDto) {
+    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, AllNewsRequest requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
                 .fromUriString(baseUrl)
                 .pathSegment(endpoint);
@@ -68,7 +68,7 @@ public class AllNewsServiceImpl extends BaseNewsClient implements INewsArticlesS
     }
 
     @Override
-    public NewsResponseDto getNewsArticles(AllNewsRequestDto newsRequestDto) {
+    public ClientNewsResponse getNewsArticles(AllNewsRequest newsRequestDto) {
         String baseUrl = newsClientApiConfig.baseUrl();
         String endpoint = newsClientApiConfig.endpoint().get("everything");
         UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, newsRequestDto);
@@ -80,7 +80,7 @@ public class AllNewsServiceImpl extends BaseNewsClient implements INewsArticlesS
         var response = restClient.get()
                 .uri(url)
                 .retrieve()
-                .body(NewsResponseDto.class);
+                .body(ClientNewsResponse.class);
 
         System.out.println("Response Status: " + response.getStatus());
         System.out.println("Total Results: " + response.getTotalResults());

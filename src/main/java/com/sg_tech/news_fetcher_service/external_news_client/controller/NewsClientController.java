@@ -4,12 +4,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.allNews.AllNewsRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceRequestDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.sources.SourceResponseDto;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines.TopHeadlinesRequestDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.NewsApiResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.SourceApiResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.model.AllNewsRequest;
+import com.sg_tech.news_fetcher_service.external_news_client.model.SourceRequest;
+import com.sg_tech.news_fetcher_service.external_news_client.model.TopHeadlinesRequest;
 import com.sg_tech.news_fetcher_service.external_news_client.service.INewsArticlesService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.impl.SourceServiceImpl;
@@ -40,13 +39,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class NewsClientController {
 
 
-    private final INewsArticlesService<AllNewsRequestDto> allNewsServiceImpl;
-    private final INewsArticlesService<TopHeadlinesRequestDto> topHeadlinesServiceImpl;
+    private final INewsArticlesService<AllNewsRequest> allNewsServiceImpl;
+    private final INewsArticlesService<TopHeadlinesRequest> topHeadlinesServiceImpl;
     private final ISourceService sourceServiceImpl;
 
     public NewsClientController(
-        INewsArticlesService<AllNewsRequestDto> allNewsServiceImpl, 
-        INewsArticlesService<TopHeadlinesRequestDto> topHeadlinesServiceImpl, 
+        INewsArticlesService<AllNewsRequest> allNewsServiceImpl, 
+        INewsArticlesService<TopHeadlinesRequest> topHeadlinesServiceImpl, 
         ISourceService sourceService
         , SourceServiceImpl sourceServiceImpl) {
         this.allNewsServiceImpl = allNewsServiceImpl;
@@ -63,8 +62,26 @@ public class NewsClientController {
     @ApiResponses
     (
         value = {
-            @ApiResponse(responseCode = "200", description = "This indicates that top headlines fetched successfully."),
-            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid request parameters."),
+            @ApiResponse
+            (
+                responseCode = "200", 
+                description = "This indicates that top headlines fetched successfully.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = NewsApiResponseDto.class)
+                )
+            ),
+            @ApiResponse
+            (
+                responseCode = "400", 
+                description = "Bad Request - Invalid request parameters.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ApiErrorDto.class)
+                )
+            ),
             @ApiResponse
             (
                 responseCode = "500", 
@@ -79,9 +96,13 @@ public class NewsClientController {
     )
 
     @GetMapping("/top-headlines")
-    public ResponseEntity<NewsResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequestDto requestDto) {
+    public ResponseEntity<NewsApiResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequest requestDto) {
+        NewsApiResponseDto response = new NewsApiResponseDto(
+                HttpStatus.OK,
+                "Top headlines fetched successfully.",
+                topHeadlinesServiceImpl.getNewsArticles(requestDto));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(topHeadlinesServiceImpl.getNewsArticles(requestDto));
+                .body(response);
     }
 
     /**
@@ -94,8 +115,26 @@ public class NewsClientController {
     @ApiResponses
     (
         value = {
-            @ApiResponse(responseCode = "200", description = "This indicates that top headlines fetched successfully."),
-            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid request parameters."),
+            @ApiResponse
+            (
+                responseCode = "200",
+                description = "This indicates that all news articles fetched successfully.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = NewsApiResponseDto.class)
+                )
+            ),
+            @ApiResponse
+            (
+                responseCode = "400", 
+                description = "Bad Request - Invalid request parameters.",
+                content = @Content
+                (
+                    
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ApiErrorDto.class)
+                )
+            ),
             @ApiResponse
             (
                 responseCode = "500", 
@@ -110,9 +149,13 @@ public class NewsClientController {
     )
 
     @GetMapping("/all-news")
-    public ResponseEntity<NewsResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequestDto requestDto) {
+    public ResponseEntity<NewsApiResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequest requestDto) {
+        NewsApiResponseDto response = new NewsApiResponseDto(
+                HttpStatus.OK,
+                "All news articles fetched successfully.",
+                allNewsServiceImpl.getNewsArticles(requestDto));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(allNewsServiceImpl.getNewsArticles(requestDto));
+                .body(response);
     }
     /**
      * This endpoint fetches all news sources based on the provided request parameters.
@@ -127,11 +170,11 @@ public class NewsClientController {
             @ApiResponse
             (
                 responseCode = "200", 
-                description = "This indicates that sources were fetched successfully.",
+                description = "This indicates that news sources were fetched successfully.",
                 content = @Content
                 (
                     
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = SourceResponseDto.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = SourceApiResponseDto.class)
                 )
             ),
             @ApiResponse
@@ -158,8 +201,12 @@ public class NewsClientController {
     )
 
     @GetMapping("/all-sources")
-    public ResponseEntity<SourceResponseDto> getAllSources(@Valid @ModelAttribute SourceRequestDto requestDto) {
+    public ResponseEntity<SourceApiResponseDto> getAllSources(@Valid @ModelAttribute SourceRequest requestDto) {
+        SourceApiResponseDto response = new SourceApiResponseDto(
+                HttpStatus.OK,
+                "All news sources fetched successfully.",
+                sourceServiceImpl.fetchSources(requestDto));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(sourceServiceImpl.fetchSources(requestDto));
+                .body(response);
     }
 }

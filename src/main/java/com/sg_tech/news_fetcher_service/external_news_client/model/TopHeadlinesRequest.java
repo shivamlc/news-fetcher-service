@@ -1,9 +1,9 @@
-package com.sg_tech.news_fetcher_service.external_news_client.dto.client.topHeadlines;
+package com.sg_tech.news_fetcher_service.external_news_client.model;
 
 import java.util.List;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.Category;
-import com.sg_tech.news_fetcher_service.external_news_client.dto.enums.Country;
+import com.sg_tech.news_fetcher_service.external_news_client.enums.Category;
+import com.sg_tech.news_fetcher_service.external_news_client.enums.Country;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
@@ -13,10 +13,10 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Schema(name = "TopHeadlinesRequest", description = "Request DTO for fetching top headlines from the news client API.")
+@Schema(name = "TopHeadlinesRequest", description = "Client model for fetching top headlines from the news client API.")
 @Data
 @AllArgsConstructor
-public class TopHeadlinesRequestDto {
+public class TopHeadlinesRequest {
 
     @Schema
     ( 

@@ -1,6 +1,6 @@
 package com.sg_tech.news_fetcher_service.external_news_client.service;
 
-import com.sg_tech.news_fetcher_service.external_news_client.dto.client.NewsResponseDto;
+import com.sg_tech.news_fetcher_service.external_news_client.model.ClientNewsResponse;
 
 public interface INewsArticlesService<T> {
 
@@ -11,5 +11,5 @@ public interface INewsArticlesService<T> {
      * @return A NewsResponseDto containing the status, total results, and articles.
      */
 
-    NewsResponseDto getNewsArticles(T newsRequestDto);
+    ClientNewsResponse getNewsArticles(T newsRequestDto);
 }
