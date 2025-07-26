@@ -6,6 +6,7 @@ import java.util.List;
 import com.sg_tech.news_fetcher_service.external_news_client.enums.SearchArea;
 import com.sg_tech.news_fetcher_service.external_news_client.enums.SortBy;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
@@ -30,39 +31,43 @@ public class AllNewsRequest {
     @NotBlank(message = "Query cannot be blank")
     private String query;
 
-    @Schema
-    (
-        name = "searchIn", 
-        description = "List of news article components to search the query in. Optional, can be null if not specified.",
-        example = "[title, description]" // Example value for searchIn
+    @ArraySchema(
+    schema = @Schema(implementation = SearchArea.class),
+        arraySchema = @Schema(
+            description = "List of news article components to search the query in. Optional, can be null if not specified.",
+            example = "[\"title\", \"description\"]"
+        )
     )
     // Optional attrs, can be null if not specified
     @Nullable
     private List<SearchArea> searchIn; 
 
-    @Schema
-    (
-        name = "sources", 
-        description = "List of news sources to filter the news articles. Optional, can be null if not specified.",
-        example = "[cnn, bbc-news]" // Example value for sources
+    @ArraySchema(
+        schema = @Schema(implementation = String.class),
+        arraySchema = @Schema(
+            description = "List of sources to filter the news articles. Optional, can be null if not specified.",
+            example = "[\"cnn\", \"bbc-news\"]"
+        )
     )
     @Nullable
     private List<String> sources;  
 
-    @Schema
-    (
-        name = "domains", 
-        description = "List of domains to filter the news articles. Optional, can be null if not specified.",
-        example = "[example.com, news.com]" // Example value for domains
+    @ArraySchema(
+        schema = @Schema(implementation = String.class),
+        arraySchema = @Schema(
+            description = "List of domains to filter the news articles. Optional, can be null if not specified.",
+            example = "[\"example.com\", \"news.com\"]"
+        )
     )
     @Nullable
     private List<String> domains;
 
-    @Schema
-    (
-        name = "excludeDomains", 
-        description = "List of domains to exclude from the news articles. Optional, can be null if not specified.",
-        example = "[excluded.com, spam.com]" // Example value for excludeDomains
+    @ArraySchema(
+        schema = @Schema(implementation = String.class),
+        arraySchema = @Schema(
+            description = "List of domains to exclude from the news articles. Optional, can be null if not specified.",
+            example = "[\"excluded.com\", \"spam.com\"]"
+        )
     )
     @Nullable
     private List<String> excludeDomains;

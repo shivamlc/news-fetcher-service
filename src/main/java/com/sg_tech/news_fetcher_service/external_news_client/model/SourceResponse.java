@@ -2,6 +2,7 @@ package com.sg_tech.news_fetcher_service.external_news_client.model;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,11 +24,13 @@ public class SourceResponse {
     )
     private String status;
 
-    @Schema
+   @ArraySchema
     (
-        name = "sources", 
-        description = "List of news sources obtained from the news client API.",
-        example = "[{\"id\": \"abc-news\", \"name\": \"ABC News\", \"description\": \"Latest news from ABC.\", \"url\": \"https://abcnews.go.com\", \"category\": \"general\", \"language\": \"en\", \"country\": \"us\"}]" // Example value for sources
+        schema = @Schema(implementation = Source.class),
+        arraySchema = @Schema(
+            description = "List of news sources obtained from the news client API.",
+            example = "[{\"id\": \"abc-news\", \"name\": \"ABC News\", \"description\": \"Latest news from ABC.\", \"url\": \"https://abcnews.go.com\", \"category\": \"general\"}]"
+        )
     )
     private List<Source> sources;
 }

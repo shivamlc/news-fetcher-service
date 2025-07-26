@@ -5,6 +5,7 @@ import java.util.List;
 import com.sg_tech.news_fetcher_service.external_news_client.enums.Category;
 import com.sg_tech.news_fetcher_service.external_news_client.enums.Country;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
@@ -46,11 +47,13 @@ public class TopHeadlinesRequest {
     @Size (min=1, max = 500, message = "Query size must be between 1 and 500")
     private String query; // Optional, can be null if not specified
 
-    @Schema
+   @ArraySchema
     (
-        name = "sources", 
-        description = "List of news sources to filter the top headlines. Optional, can be null if not specified.",
-        example = "[cnn, bbc-news]" // Example value for sources
+        schema = @Schema(implementation = String.class),
+        arraySchema = @Schema(
+            description = "List of sources to filter the top headlines. Optional, can be null if not specified.",
+            example = "[\"cnn\", \"bbc-news\"]"
+        )
     )
     @Nullable
     private List<String> sources; // Optional, can be null if not specified
