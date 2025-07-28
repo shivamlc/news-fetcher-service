@@ -59,16 +59,10 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
 
         String url = uriBuilder.toUriString();
 
-        System.out.println("Fetching sources from URL: " + url);
-
         var response = restClient.get()
                 .uri(url)
                 .retrieve()
                 .body(SourceResponse.class);
-
-        System.out.println("Response Status: " + response.getStatus());
-
-        System.out.println("Sources: " + response.getSources().size());
 
         return response;
     }
