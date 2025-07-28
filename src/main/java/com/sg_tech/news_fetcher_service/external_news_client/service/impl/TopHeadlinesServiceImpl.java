@@ -18,33 +18,33 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements ITopHeadl
     }
 
     //TODO: refactor this
-    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, TopHeadlinesRequest requestDto) {
+    private UriComponentsBuilder buildUriComponents(TopHeadlinesRequest topHeadlinesRequest) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-        .fromUriString(baseUrl)
-        .pathSegment(endpoint);
+        .fromUriString(newsClientApiConfig.baseUrl())
+        .pathSegment(newsClientApiConfig.endpoint().get("top-headlines"));
 
-        if (requestDto.getPageSize() != null) {
-        uriComponentsBuilder.queryParam("pageSize", requestDto.getPageSize());
+        if (topHeadlinesRequest.getPageSize() != null) {
+        uriComponentsBuilder.queryParam("pageSize", topHeadlinesRequest.getPageSize());
         }
-        if (requestDto.getPage() != null) {
-        uriComponentsBuilder.queryParam("page", requestDto.getPage());
-        }
-
-        if(requestDto.getQuery() != null && !requestDto.getQuery().isBlank()) {
-        uriComponentsBuilder.queryParam("q", requestDto.getQuery());
+        if (topHeadlinesRequest.getPage() != null) {
+        uriComponentsBuilder.queryParam("page", topHeadlinesRequest.getPage());
         }
 
-        if(requestDto.getSources() != null && !requestDto.getSources().isEmpty()) {
-        String sources = String.join(",", requestDto.getSources());
+        if(topHeadlinesRequest.getQuery() != null && !topHeadlinesRequest.getQuery().isBlank()) {
+        uriComponentsBuilder.queryParam("q", topHeadlinesRequest.getQuery());
+        }
+
+        if(topHeadlinesRequest.getSources() != null && !topHeadlinesRequest.getSources().isEmpty()) {
+        String sources = String.join(",", topHeadlinesRequest.getSources());
         uriComponentsBuilder.queryParam("sources", sources);
         return uriComponentsBuilder;
         }
 
-        if (requestDto.getCountry() != null) {
-        uriComponentsBuilder.queryParam("country", requestDto.getCountry().getCode());
+        if (topHeadlinesRequest.getCountry() != null) {
+        uriComponentsBuilder.queryParam("country", topHeadlinesRequest.getCountry().getCode());
         }
-        if (requestDto.getCategory() != null) {
-        uriComponentsBuilder.queryParam("category", requestDto.getCategory().getValue());
+        if (topHeadlinesRequest.getCategory() != null) {
+        uriComponentsBuilder.queryParam("category", topHeadlinesRequest.getCategory().getValue());
         }
 
         return uriComponentsBuilder;       
@@ -61,27 +61,19 @@ public class TopHeadlinesServiceImpl extends BaseNewsClient implements ITopHeadl
      * This method constructs the request URL, sends the request to the external news API,
      * and returns the response containing the top headlines.
      *
-     * @param newsRequestDto The request parameters for fetching top headlines.
+     * @param newstopHeadlinesRequest The request parameters for fetching top headlines.
      * @return ClientNewsResponse containing the list of top headlines.
      */
     @Override
-    public ClientNewsResponse getTopNewsHeadlines(TopHeadlinesRequest newsRequestDto) {
-        String baseUrl = newsClientApiConfig.baseUrl();
-        String endpoint = newsClientApiConfig.endpoint().get("top-headlines");
-        UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, newsRequestDto);
+    public ClientNewsResponse getTopNewsHeadlines(TopHeadlinesRequest newstopHeadlinesRequest) {
+        UriComponentsBuilder uriBuilder = buildUriComponents(newstopHeadlinesRequest);
 
         String url = uriBuilder.toUriString();
-
-        System.out.println("Fetching top headlines from URL: " + url);
 
         var response = restClient.get()
                 .uri(url)
                 .retrieve()
                 .body(ClientNewsResponse.class);
-
-        System.out.println("Response Status: " + response.getStatus());
-        System.out.println("Total Results: " + response.getTotalResults());
-        System.out.println("Articles: " + response.getArticles().length);
         return response;
 
     }
