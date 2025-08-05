@@ -5,7 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Custom annotation for logging controller method invocations.
+ * Custom annotation created for logging controller method invocations.
  * This aspect will log the method name when a controller method is invoked.
  */
 @Retention(RetentionPolicy.RUNTIME)// This annotation will be available at runtime
