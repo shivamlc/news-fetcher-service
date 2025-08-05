@@ -3,6 +3,7 @@ package com.sg_tech.news_fetcher_service.external_news_client.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sg_tech.news_fetcher_service.external_news_client.aspect.customAspect.CustomLogAspect;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.NewsApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.SourceApiResponseDto;
@@ -95,6 +96,7 @@ public class NewsClientController {
     )
 
     @GetMapping("/top-headlines")
+    @CustomLogAspect // Custom aspect for logging
     public ResponseEntity<NewsApiResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequest request) {
         NewsApiResponseDto response = new NewsApiResponseDto(
                 HttpStatus.OK,
@@ -148,6 +150,7 @@ public class NewsClientController {
     )
 
     @GetMapping("/all-news")
+    @CustomLogAspect // Custom aspect for logging
     public ResponseEntity<NewsApiResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequest request) {
         NewsApiResponseDto response = new NewsApiResponseDto(
                 HttpStatus.OK,
@@ -200,6 +203,7 @@ public class NewsClientController {
     )
 
     @GetMapping("/all-sources")
+    @CustomLogAspect // Custom aspect for logging
     public ResponseEntity<SourceApiResponseDto> getAllSources(@Valid @ModelAttribute SourceRequest request) {
         SourceApiResponseDto response = new SourceApiResponseDto(
                 HttpStatus.OK,
