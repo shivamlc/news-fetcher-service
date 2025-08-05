@@ -18,20 +18,20 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
     }
 
     //TODO: refactor this
-    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, SourceRequest requestDto) {
+    private UriComponentsBuilder buildUriComponents(SourceRequest sourceRequest) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-        .fromUriString(baseUrl)
-        .pathSegment(endpoint);
+        .fromUriString(newsClientApiConfig.baseUrl())
+        .pathSegment(newsClientApiConfig.endpoint().get("sources"));
 
 
-        if(requestDto.getLanguage() != null) {
-        uriComponentsBuilder.queryParam("language", requestDto.getLanguage().getCode());
+        if(sourceRequest.getLanguage() != null) {
+        uriComponentsBuilder.queryParam("language", sourceRequest.getLanguage().getCode());
         } 
-        if (requestDto.getCountry() != null) {
-        uriComponentsBuilder.queryParam("country", requestDto.getCountry().getCode());
+        if (sourceRequest.getCountry() != null) {
+        uriComponentsBuilder.queryParam("country", sourceRequest.getCountry().getCode());
         } 
-        if (requestDto.getCategory() != null) {
-        uriComponentsBuilder.queryParam("category", requestDto.getCategory().getValue());
+        if (sourceRequest.getCategory() != null) {
+        uriComponentsBuilder.queryParam("category", sourceRequest.getCategory().getValue());
         }
 
         return uriComponentsBuilder;
@@ -48,27 +48,19 @@ public class SourceServiceImpl extends BaseNewsClient implements ISourceService 
      * This method constructs the request URL, sends the request to the external news API,
      * and returns the response containing the sources.
      *
-     * @param sourceRequestDto The request parameters for fetching sources.
+     * @param sourceRequest The request parameters for fetching sources.
      * @return SourceResponse containing the list of sources.
      */
     @Override
-    public SourceResponse fetchSources(SourceRequest sourceRequestDto) {
-        String baseUrl = newsClientApiConfig.baseUrl();
-        String endpoint = newsClientApiConfig.endpoint().get("sources");
-        UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, sourceRequestDto);
+    public SourceResponse fetchSources(SourceRequest sourceRequest) {
+        UriComponentsBuilder uriBuilder = buildUriComponents(sourceRequest);
 
         String url = uriBuilder.toUriString();
-
-        System.out.println("Fetching sources from URL: " + url);
 
         var response = restClient.get()
                 .uri(url)
                 .retrieve()
                 .body(SourceResponse.class);
-
-        System.out.println("Response Status: " + response.getStatus());
-
-        System.out.println("Sources: " + response.getSources().size());
 
         return response;
     }

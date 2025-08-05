@@ -3,6 +3,7 @@ package com.sg_tech.news_fetcher_service.external_news_client.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sg_tech.news_fetcher_service.external_news_client.aspect.customAspect.CustomLogAspect;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.NewsApiResponseDto;
 import com.sg_tech.news_fetcher_service.external_news_client.dto.schema_responses.SourceApiResponseDto;
@@ -12,7 +13,6 @@ import com.sg_tech.news_fetcher_service.external_news_client.model.TopHeadlinesR
 import com.sg_tech.news_fetcher_service.external_news_client.service.IAllNewsArticlesService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ITopHeadlinesService;
-import com.sg_tech.news_fetcher_service.external_news_client.service.impl.SourceServiceImpl;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -55,7 +55,7 @@ public class NewsClientController {
     /**
      * This endpoint fetches top headlines based on the provided request parameters.
      * 
-     * @param requestDto The request parameters for fetching top headlines.
+     * @param request The request parameters for fetching top headlines.
      * @return A ResponseEntity containing the NewsResponseDto with the top headlines.
      */
     @Operation(summary = "Fetch Top Headlines", description = "This endpoint fetches top headlines based on the provided request parameters.")
@@ -96,21 +96,22 @@ public class NewsClientController {
     )
 
     @GetMapping("/top-headlines")
-    public ResponseEntity<NewsApiResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequest requestDto) {
+    @CustomLogAspect // Custom aspect for logging
+    public ResponseEntity<NewsApiResponseDto> getTopHeadLines(@Valid @ModelAttribute TopHeadlinesRequest request) {
         NewsApiResponseDto response = new NewsApiResponseDto(
                 HttpStatus.OK,
                 "Top headlines fetched successfully.",
-                topHeadlinesServiceImpl.getTopNewsHeadlines(requestDto));
+                topHeadlinesServiceImpl.getTopNewsHeadlines(request));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(response);
     }
 
-    // /**
-    //  * This endpoint fetches all news articles based on the provided request parameters.
-    //  * 
-    //  * @param requestDto The request parameters for fetching all news articles.
-    //  * @return A ResponseEntity containing the NewsResponseDto with all news articles.
-    //  */
+    /**
+     * This endpoint fetches all news articles based on the provided request parameters.
+     * 
+     * @param request The request parameters for fetching all news articles.
+     * @return A ResponseEntity containing the NewsResponseDto with all news articles.
+     */
     @Operation(summary = "Fetch All News Articles", description = "This endpoint fetches all news articles based on the provided request parameters.")
     @ApiResponses
     (
@@ -149,18 +150,19 @@ public class NewsClientController {
     )
 
     @GetMapping("/all-news")
-    public ResponseEntity<NewsApiResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequest requestDto) {
+    @CustomLogAspect // Custom aspect for logging
+    public ResponseEntity<NewsApiResponseDto> getAllNews(@Valid @ModelAttribute AllNewsRequest request) {
         NewsApiResponseDto response = new NewsApiResponseDto(
                 HttpStatus.OK,
                 "All news articles fetched successfully.",
-                allNewsServiceImpl.getNewsArticles(requestDto));
+                allNewsServiceImpl.getNewsArticles(request));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(response);
     }
     /**
      * This endpoint fetches all news sources based on the provided request parameters.
      * 
-     * @param requestDto The request parameters for fetching news sources.
+     * @param request The request parameters for fetching news sources.
      * @return A ResponseEntity containing the SourceResponseDto with all news sources.
      */
     @Operation(summary = "Fetch All News Sources", description = "This endpoint fetches all news sources based on the provided request parameters.")
@@ -201,11 +203,12 @@ public class NewsClientController {
     )
 
     @GetMapping("/all-sources")
-    public ResponseEntity<SourceApiResponseDto> getAllSources(@Valid @ModelAttribute SourceRequest requestDto) {
+    @CustomLogAspect // Custom aspect for logging
+    public ResponseEntity<SourceApiResponseDto> getAllSources(@Valid @ModelAttribute SourceRequest request) {
         SourceApiResponseDto response = new SourceApiResponseDto(
                 HttpStatus.OK,
                 "All news sources fetched successfully.",
-                sourceServiceImpl.fetchSources(requestDto));
+                sourceServiceImpl.fetchSources(request));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(response);
     }

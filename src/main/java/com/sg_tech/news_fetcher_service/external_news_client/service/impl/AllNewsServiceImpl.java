@@ -18,50 +18,50 @@ public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticl
     }
 
     //TODO: refactor this
-    private UriComponentsBuilder buildUriComponents(String baseUrl, String endpoint, AllNewsRequest requestDto) {
+    private UriComponentsBuilder buildUriComponents(AllNewsRequest allNewsRequest) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-                .fromUriString(baseUrl)
-                .pathSegment(endpoint);
+                .fromUriString(newsClientApiConfig.baseUrl())
+                .pathSegment(newsClientApiConfig.endpoint().get("everything"));
 
-        if (requestDto.getPageSize() != null) {
-            uriComponentsBuilder.queryParam("pageSize", requestDto.getPageSize());
+        if (allNewsRequest.getPageSize() != null) {
+            uriComponentsBuilder.queryParam("pageSize", allNewsRequest.getPageSize());
         }
-        if (requestDto.getPage() != null) {
-            uriComponentsBuilder.queryParam("page", requestDto.getPage());
-        }
-
-        if (requestDto.getQuery() != null && !requestDto.getQuery().isBlank()) {
-            uriComponentsBuilder.queryParam("q", requestDto.getQuery());
+        if (allNewsRequest.getPage() != null) {
+            uriComponentsBuilder.queryParam("page", allNewsRequest.getPage());
         }
 
-        if (requestDto.getSources() != null && !requestDto.getSources().isEmpty()) {
-            String sources = String.join(",", requestDto.getSources());
+        if (allNewsRequest.getQuery() != null && !allNewsRequest.getQuery().isBlank()) {
+            uriComponentsBuilder.queryParam("q", allNewsRequest.getQuery());
+        }
+
+        if (allNewsRequest.getSources() != null && !allNewsRequest.getSources().isEmpty()) {
+            String sources = String.join(",", allNewsRequest.getSources());
             uriComponentsBuilder.queryParam("sources", sources);
         }
 
-        if (requestDto.getSources() != null && !requestDto.getDomains().isEmpty()) {
-            String domains = String.join(",", requestDto.getDomains());
+        if (allNewsRequest.getSources() != null && !allNewsRequest.getDomains().isEmpty()) {
+            String domains = String.join(",", allNewsRequest.getDomains());
             uriComponentsBuilder.queryParam("domains", domains);
         }
 
-        if (requestDto.getSources() != null && !requestDto.getExcludeDomains().isEmpty()) {
-            String excludeDomains = String.join(",", requestDto.getExcludeDomains());
+        if (allNewsRequest.getSources() != null && !allNewsRequest.getExcludeDomains().isEmpty()) {
+            String excludeDomains = String.join(",", allNewsRequest.getExcludeDomains());
             uriComponentsBuilder.queryParam("excludeDomains", excludeDomains);
         }
 
-        if (requestDto.getFromDate() != null) {
+        if (allNewsRequest.getFromDate() != null) {
 
-            uriComponentsBuilder.queryParam("from", requestDto.getFromDate());
+            uriComponentsBuilder.queryParam("from", allNewsRequest.getFromDate());
         }
 
-         if (requestDto.getToDate() != null) {
+         if (allNewsRequest.getToDate() != null) {
 
-            uriComponentsBuilder.queryParam("to", requestDto.getToDate());
+            uriComponentsBuilder.queryParam("to", allNewsRequest.getToDate());
         }
 
-         if (requestDto.getSortBy() != null) {
+         if (allNewsRequest.getSortBy() != null) {
 
-            uriComponentsBuilder.queryParam("sortBy", requestDto.getSortBy().getValue());
+            uriComponentsBuilder.queryParam("sortBy", allNewsRequest.getSortBy().getValue());
         }
 
         return uriComponentsBuilder;
@@ -82,14 +82,12 @@ public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticl
      * This method constructs the request URL, sends the request to the external news API,
      * and returns the response containing the news articles.
      *
-     * @param newsRequestDto The request parameters for fetching all news articles.
+     * @param allNewsRequest The request parameters for fetching all news articles.
      * @return ClientNewsResponse containing the list of all news articles.
      */
     @Override
-    public ClientNewsResponse getNewsArticles(AllNewsRequest newsRequestDto) {
-        String baseUrl = newsClientApiConfig.baseUrl();
-        String endpoint = newsClientApiConfig.endpoint().get("everything");
-        UriComponentsBuilder uriBuilder = buildUriComponents(baseUrl, endpoint, newsRequestDto);
+    public ClientNewsResponse getNewsArticles(AllNewsRequest allNewsRequest) {
+        UriComponentsBuilder uriBuilder = buildUriComponents(allNewsRequest);
 
         String url = uriBuilder.toUriString();
 
