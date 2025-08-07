@@ -1,14 +1,14 @@
 spring:
   application:
-    name: news-fetcher-service (DEV)
+    name: news-fetcher-service (PROD)
   config:
     activate:
-      on-profile: DEV
+      on-profile: PROD
 
   ai:
     mcp:
       server: 
-        name: news-fetcher-service-mcp (DEV)
+        name: news-fetcher-service-mcp (PROD)
         version: 1.0.0
 
   main:
@@ -17,7 +17,7 @@ spring:
       group: 
         info_level_group: com.sg_tech.news_fetcher_service.external_news_client.service.impl, com.sg_tech.news_fetcher_service.external_news_client.service.controller
       level:
-        info_level_group: INFO
+        info_level_group: WARN
 
                 
 server:

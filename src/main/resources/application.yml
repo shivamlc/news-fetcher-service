@@ -4,6 +4,12 @@ spring:
   output:
     ansi:
       enabled: always # enables ANSI colors in the console output; logging will use colors in the console
+  config:
+    import:
+    - classpath:application-${spring.profiles.active}.yml # imports the profile-specific configuration file based on the active profile
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:DEV}
+
 
 # debug: true # same as setting the logging level to DEBUG for the root logger
 
@@ -16,6 +22,8 @@ logging:
     com.sg_tech.news_fetcher_service.external_news_client.service.controller: DEBUG # logging level for the news fetcher external client controller package
   pattern:
     console: "%d{ISO8601} [%thread] %highlight(%-5level) %class{36}.%method:%line %logger{36} - %msg%n" # pattern for the console logging
+
+
 
 
 
