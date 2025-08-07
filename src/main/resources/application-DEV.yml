@@ -11,8 +11,11 @@ spring:
   main:
     banner-mode: off 
   logging:
-      file:
-        name: news-fetcher-service.log
+      group: 
+        info_level_group: com.sg_tech.news_fetcher_service.external_news_client.service.impl, com.sg_tech.news_fetcher_service.external_news_client.service.controller
+      level:
+        info_level_group: INFO
+
                 
 server:
   port: ${SERVER_PORT:8080}

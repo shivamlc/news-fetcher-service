@@ -1,5 +1,25 @@
 spring:
   application:
     name: news-fetcher-service
+  output:
+    ansi:
+      enabled: always # enables ANSI colors in the console output; logging will use colors in the console
+
+# debug: true # same as setting the logging level to DEBUG for the root logger
+
+
+logging:
+  level:
+    root: INFO # logging level for the spring framework and the libraries it uses
+    # com.sg_tech.news_fetcher_service.external_news_client.service.*: DEBUG # logging level for the news fetcher external client service package and all its sub-packages
+    com.sg_tech.news_fetcher_service.external_news_client.service.impl: DEBUG # logging level for the news fetcher external client service impl package
+    com.sg_tech.news_fetcher_service.external_news_client.service.controller: DEBUG # logging level for the news fetcher external client controller package
+  pattern:
+    console: "%d{ISO8601} [%thread] %highlight(%-5level) %class{36}.%method:%line %logger{36} - %msg%n" # pattern for the console logging
+
+
+
+
+    
 
 
