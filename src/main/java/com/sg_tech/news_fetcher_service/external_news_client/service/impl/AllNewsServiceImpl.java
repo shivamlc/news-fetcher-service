@@ -39,12 +39,12 @@ public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticl
             uriComponentsBuilder.queryParam("sources", sources);
         }
 
-        if (allNewsRequest.getSources() != null && !allNewsRequest.getDomains().isEmpty()) {
+        if (allNewsRequest.getDomains() != null && !allNewsRequest.getDomains().isEmpty()) {
             String domains = String.join(",", allNewsRequest.getDomains());
             uriComponentsBuilder.queryParam("domains", domains);
         }
 
-        if (allNewsRequest.getSources() != null && !allNewsRequest.getExcludeDomains().isEmpty()) {
+        if (allNewsRequest.getExcludeDomains() != null && !allNewsRequest.getExcludeDomains().isEmpty()) {
             String excludeDomains = String.join(",", allNewsRequest.getExcludeDomains());
             uriComponentsBuilder.queryParam("excludeDomains", excludeDomains);
         }
