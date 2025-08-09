@@ -1,8 +1,19 @@
 {
 	"servers": {
-		"my-mcp-server-c75b4ec7": {
-			"url": "http://localhost:8080/sse",
-			"type": "http"
+		// "my-mcp-server-c75b4ec7": {
+		// 	"url": "http://localhost:8080/sse",
+		// 	"type": "http"
+		// },
+		"news-fetcher-service": {
+			"type": "stdio",
+			"command": "docker",
+			"args": [
+				"run",
+				"-i",
+				"--rm",
+				"sgaurtech/news-fetcher-service"
+			],
+			"env": {}
 		}
 	},
 	"inputs": []
