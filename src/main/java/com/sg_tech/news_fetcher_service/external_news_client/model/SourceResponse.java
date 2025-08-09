@@ -12,7 +12,7 @@ import lombok.Data;
     name = "NewsSourceResponse", 
     description = "Client model for presenting news sources obtained from the news client API."
 )
-// TODO: Replace List<SourceDto> with internal DTO for List<SourceDto> to suit business needs.
+
 @Data
 @AllArgsConstructor
 public class SourceResponse {

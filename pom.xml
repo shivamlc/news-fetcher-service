@@ -12,6 +12,7 @@
 	<groupId>com.sg_tech</groupId>
 	<artifactId>news_fetcher_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>news-fetcher-service</name>
 	<description>Microservice built using Spring Boot to fetch news data from open source api</description>
 	<url />

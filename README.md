@@ -11,6 +11,7 @@ This project is a Spring Boot REST API service that connects to external news AP
 - Dependency injection for all services and configuration
 - Global exception handling for robust error management
 - Modular service and controller layers
+- Aspect-Oriented Programming (AOP) for cross-cutting concerns like logging and validation
 - MCP integration for LLM-powered news search and summarization
 
 ## Architecture & Design Principles
@@ -19,6 +20,7 @@ This project is a Spring Boot REST API service that connects to external news AP
 - **Configuration Properties:** External API endpoints, keys, and other settings are managed via `@ConfigurationProperties` classes, making the service environment-agnostic and easy to configure.
 - **DTOs and Models:** Data Transfer Objects (DTOs) are used for API requests and responses, while domain models encapsulate business logic.
 - **Global Exception Handler:** A `@ControllerAdvice` class handles exceptions across the application, providing consistent error responses.
+- **Aspect-Oriented Programming (AOP):** Cross-cutting concerns like logging, validation, and performance monitoring are handled through aspects, keeping business logic clean and focused.
 - **Extensibility:** The service layer is designed for easy extension to support new endpoints or news providers.
 - **MCP Integration:** The project uses MCP tools to enable LLM-powered features, such as semantic search, summarization, and intelligent filtering of news articles.
 
@@ -33,6 +35,10 @@ This project is a Spring Boot REST API service that connects to external news AP
   - Service interfaces and implementations (e.g., `IAllNewsArticlesService`, `AllNewsServiceImpl`) encapsulate business logic and API integration.
 - **Controllers:**
   - REST controllers expose endpoints for fetching news, sources, and headlines.
+- **Aspects (AOP):**
+  - `NewsClientServiceLoggerAspect` provides comprehensive logging for method execution, parameters, and performance metrics.
+  - `NewsClientServiceRequestCheckAspect` validates request parameters and configuration before method execution.
+  - Cross-cutting concerns are cleanly separated from business logic using Spring AOP.
 - **Exception Handling:**
   - A global exception handler provides uniform error responses and logging.
 - **MCP Tools:**
@@ -54,6 +60,38 @@ This project is a Spring Boot REST API service that connects to external news AP
 7. **MCP Integration:**
    - MCP tools enable LLM-powered features, allowing users to query news using natural language and receive intelligent summaries.
 
+## Aspect-Oriented Programming (AOP) Implementation
+
+The project leverages Spring AOP to handle cross-cutting concerns efficiently, keeping business logic clean and focused. The following aspects are implemented:
+
+### 1. **NewsClientServiceLoggerAspect**
+- **Purpose:** Comprehensive logging and performance monitoring
+- **Features:**
+  - Logs method entry, exit, and execution time
+  - Captures method parameters and return values
+  - Provides detailed error logging with stack traces
+  - Performance metrics for API calls
+- **Pointcut:** `@Around("execution(* com.sg_tech.news_fetcher_service.external_news_client.service.impl.*.*(..))")`
+- **Order:** `@Order(2)` - Runs after validation aspects
+
+### 2. **NewsClientServiceRequestCheckAspect**
+- **Purpose:** Request validation and configuration checks
+- **Features:**
+  - Validates request DTOs before method execution
+  - Ensures required parameters are properly configured
+  - Throws meaningful exceptions for invalid requests
+  - Logs validation success/failure
+- **Pointcut:** `@Before("execution(...) && args(requestDto)")`
+- **Order:** `@Order(1)` - Runs before logging aspects
+
+### AOP Benefits in This Project:
+- **Separation of Concerns:** Business logic remains clean without logging/validation code
+- **Code Reusability:** Same aspects apply to all service methods
+- **Maintainability:** Easy to modify logging or validation behavior in one place
+- **Performance Monitoring:** Automatic timing and performance metrics
+- **Consistent Error Handling:** Uniform error logging across all services
+- **Non-intrusive:** Existing business logic doesn't need modification
+
 ## Model Context Protocol (MCP) & LLM Capabilities
 - The project integrates with MCP, which provides a standardized way to interact with LLMs.
 - MCP tools allow the service to:
@@ -67,6 +105,7 @@ This project is a Spring Boot REST API service that connects to external news AP
 - **DTO Usage:** DTOs decouple API contracts from internal models, improving maintainability.
 - **Dependency Injection:** Promotes loose coupling and testability.
 - **Global Exception Handling:** Ensures consistent error responses and easier debugging.
+- **Aspect-Oriented Programming:** Cross-cutting concerns like logging, validation, and monitoring are cleanly separated from business logic, improving code maintainability and reducing duplication.
 - **Extensible Service Layer:** New news providers or endpoints can be added with minimal changes.
 - **MCP/LLM Integration:** Future-proofs the service by enabling AI-powered features.
 
@@ -84,13 +123,74 @@ This project is a Spring Boot REST API service that connects to external news AP
 ### How to run the application locally in vs code 
 
 - Create .env file and put ```NEWS_API_KEY=<YOUR_NEWS_API_KEY>``` in the .env file
+- Optional env vars:
+  ```SPRING_PROFILES_ACTIVE=<PROFILE>```
+  ```SERVER_PORT=<PORT_NO>```
 - Export the env vars to the terminal using:
 ```export $(grep -v '^#' .env | xargs)```
 - Run the spring boot app in DEV profile: 
-```./mvnw spring-boot:run -Dspring-boot.run.profiles=dev```
+```./mvn spring-boot:run```
 
-- Usefule tip: to kill an already running instance on port 8080, use:
+- Useful tip: to kill an already running instance on port 8080, use:
 ```lsof -ti tcp:8080 | xargs kill -9```
 
-## Conclusion
-This project demonstrates a robust, extensible, and modern approach to building a news aggregation service using Spring Boot, with advanced LLM capabilities enabled by MCP. It follows best practices in configuration, dependency management, error handling, and modular design.
+## Helpful mvn commands
+
+- ```mvn clean install``` - compile the maven application
+- ```mvn spring-boot:run``` - run the spring boot app
+
+
+## Running with Docker
+
+### Local Development
+- Create .env file and put ```NEWS_API_KEY=<YOUR_NEWS_API_KEY>``` in the .env file
+- Optional env vars:
+  ```SPRING_PROFILES_ACTIVE=<PROFILE>```
+  ```SERVER_PORT=<PORT_NO>```
+
+#### Option 1: Build locally then tag for Docker Hub
+```bash
+# Build with local name
+docker build . -t news-fetcher-service:latest
+# Run locally
+docker run --env-file .env -p 8080:8080 news-fetcher-service:latest
+# Tag for Docker Hub (retagging required)
+docker tag news-fetcher-service:v1 sgaurtech/news-fetcher-service:latest
+```
+
+#### Option 2: Build directly with Docker Hub name (no retagging needed)
+```bash
+# Build directly with Docker Hub name
+docker build . -t sgaurtech/news-fetcher-service:latest
+# Run locally
+docker run --env-file .env -p 8080:8080 sgaurtech/news-fetcher-service:latest
+# Push directly (no retagging needed)
+docker push sgaurtech/news-fetcher-service:latest
+```
+
+### Using Docker Compose
+```bash
+# Build and run with docker-compose
+docker-compose up --build
+
+# Run in background
+docker-compose up -d --build
+```
+
+### Pushing to Docker Hub
+```bash
+# Login to Docker Hub
+docker login
+
+# Tag the image for Docker Hub (if option 1 is used above)
+docker tag news-fetcher-service:v1 sgaurtech/news-fetcher-service:latest
+
+# Push to Docker Hub
+docker push sgaurtech/news-fetcher-service:latest
+```
+
+### Running from Docker Hub
+```bash
+# Pull and run from Docker Hub
+docker run --env-file .env -p 8080:8080 sgaurtech/news-fetcher-service:latest
+```

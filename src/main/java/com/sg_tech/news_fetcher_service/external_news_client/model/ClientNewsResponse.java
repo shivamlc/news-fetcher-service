@@ -11,7 +11,7 @@ import lombok.Data;
     name = "Client News Response", 
     description = "Client model for presenting news articles obtained from the news client API."
 )
-// TODO: Replace List<ArticleDto> with internal DTO for List<ArticleDto> to suit business needs.
+
 @Data
 @AllArgsConstructor
 public class ClientNewsResponse {
