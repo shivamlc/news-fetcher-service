@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Schema
 (
-    name = "Article", 
+    name = "Article Model", 
     description = "Client model representing a news article obtained from the news client API."
 )
 

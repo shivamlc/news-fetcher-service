@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Schema(name = "NewsSourceRequest", description = "Client model for fetching news sources from the news client API.")
+@Schema(name = "NewsSourceRequest Model", description = "Client model for fetching news sources from the news client API.")
 @Data
 @AllArgsConstructor
 public class SourceRequest {

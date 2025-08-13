@@ -129,7 +129,7 @@ The project leverages Spring AOP to handle cross-cutting concerns efficiently, k
 - Export the env vars to the terminal using:
 ```export $(grep -v '^#' .env | xargs)```
 - Run the spring boot app in DEV profile: 
-```./mvn spring-boot:run```
+```mvn spring-boot:run```
 
 - Useful tip: to kill an already running instance on port 8080, use:
 ```lsof -ti tcp:8080 | xargs kill -9```
@@ -168,6 +168,20 @@ docker run --env-file .env -p 8080:8080 sgaurtech/news-fetcher-service:latest
 docker push sgaurtech/news-fetcher-service:latest
 ```
 
+#### Building without cache (for fresh builds with code changes)
+```bash
+# Build without using any cached layers
+docker build --no-cache -t sgaurtech/news-fetcher-service:latest .
+
+# Remove existing image and rebuild completely
+docker rmi sgaurtech/news-fetcher-service:latest
+docker build -t sgaurtech/news-fetcher-service:latest .
+
+# Clean up all unused images and rebuild
+docker system prune -af
+docker build -t sgaurtech/news-fetcher-service:latest .
+```
+
 ### Using Docker Compose
 ```bash
 # Build and run with docker-compose
@@ -175,6 +189,18 @@ docker-compose up --build
 
 # Run in background
 docker-compose up -d --build
+
+# Force rebuild without cache (when you have code changes)
+docker-compose build --no-cache
+docker-compose up
+
+# Complete cleanup and rebuild (removes all cached layers)
+docker-compose down --volumes --remove-orphans
+docker-compose build --no-cache
+docker-compose up
+
+# Stop and remove containers, then rebuild with latest changes
+docker-compose down && docker-compose up --build
 ```
 
 ### Pushing to Docker Hub
@@ -187,6 +213,42 @@ docker tag news-fetcher-service:v1 sgaurtech/news-fetcher-service:latest
 
 # Push to Docker Hub
 docker push sgaurtech/news-fetcher-service:latest
+```
+
+### Troubleshooting Docker Issues
+
+#### When Docker doesn't pick up code changes:
+```bash
+# Stop all containers and remove them
+docker-compose down
+
+# Remove the specific image
+docker rmi sgaurtech/news-fetcher-service:latest
+
+# Rebuild without cache
+docker-compose build --no-cache
+
+# Start containers
+docker-compose up
+```
+
+#### Complete Docker cleanup (nuclear option):
+```bash
+# Stop all containers
+docker stop $(docker ps -aq)
+
+# Remove all containers
+docker rm $(docker ps -aq)
+
+# Remove all images
+docker rmi $(docker images -q) --force
+
+# Remove all volumes and networks
+docker system prune -af --volumes
+
+# Rebuild everything
+docker-compose build --no-cache
+docker-compose up
 ```
 
 ### Running from Docker Hub

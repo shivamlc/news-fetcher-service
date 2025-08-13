@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Schema(name = "AllNewsRequest", description = "Client model for fetching all news from the news client API.")
+@Schema(name = "AllNewsRequest Model", description = "Client model for fetching all news from the news client API.")
 @Data
 @AllArgsConstructor
 public class AllNewsRequest {
