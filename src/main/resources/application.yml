@@ -23,7 +23,7 @@ logging:
   pattern:
     console: "%d{ISO8601} [%thread] %highlight(%-5level) %class{36}.%method:%line %logger{36} - %msg%n" # pattern for the console logging
 
-
+# by default, the application will send heartbeat to the Eureka server every 30 seconds
 eureka:
   instance:
     hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost} # hostname for the Eureka server instance; its localhost for local system
@@ -50,6 +50,9 @@ management:
   endpoint:
     shutdown:
       access: unrestricted # enables the shutdown endpoint to gracefully stop the application
+      #   to shut down the application, you can use the following command:
+      #   curl -X POST http://localhost:8080/actuator/shutdown
+      # on shutdown, the application will stop gracefully and deregister from Eureka
   info:
     env:
       enabled: true # enables the env endpoint to expose environment variables
