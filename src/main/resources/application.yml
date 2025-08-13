@@ -37,7 +37,7 @@ eureka:
 
 info:
   app:
-    name: News Fetcher Service
+    name: news-fetcher-service
     description: A service to fetch news from external APIs
     version: 1.0.0
 

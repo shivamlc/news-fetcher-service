@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.sg_tech.news_fetcher_service.external_news_client.dto.internal.NewsSourceDto;
 
-@FeignClient("News Aggregator Service") // name feign client must be same as name of eureka app client
+@FeignClient("NEWS-AGGREGATOR-SERVICE-DEV") // name feign client must be same as name of eureka app client
 public interface NewsSourceAggregatorClient {
 
     // abstract method that must match the endpoint in the aggregator service
