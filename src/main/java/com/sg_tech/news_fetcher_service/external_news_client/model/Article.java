@@ -9,7 +9,7 @@ import lombok.Data;
     name = "Article", 
     description = "Client model representing a news article obtained from the news client API."
 )
-//TODO: Create an internal DTO for ArticleDto to suit business needs and create a mapper to map from this dto to the internal DTO.
+
 @Data
 @AllArgsConstructor
 public class Article {
