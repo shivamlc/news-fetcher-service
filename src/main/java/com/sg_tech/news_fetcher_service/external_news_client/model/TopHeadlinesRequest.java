@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Schema(name = "TopHeadlinesRequest", description = "Client model for fetching top headlines from the news client API.")
+@Schema(name = "TopHeadlinesRequest Model", description = "Client model for fetching top headlines from the news client API.")
 @Data
 @AllArgsConstructor
 public class TopHeadlinesRequest {

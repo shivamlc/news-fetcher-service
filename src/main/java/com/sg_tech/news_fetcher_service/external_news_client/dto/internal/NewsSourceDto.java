@@ -1,21 +1,28 @@
-package com.sg_tech.news_fetcher_service.external_news_client.model;
+package com.sg_tech.news_fetcher_service.external_news_client.dto.internal;
 
+import com.sg_tech.news_fetcher_service.external_news_client.enums.Category;
+import com.sg_tech.news_fetcher_service.external_news_client.enums.Country;
+import com.sg_tech.news_fetcher_service.external_news_client.enums.Language;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 /**
- * Model representing a news source obtained from the news client API.
- * This class is used to encapsulate the details of a news source.
+ * Internal dto representing a news source obtained from the news client API.
+ * This class is used to transfer news source data between services.
  */
 @Schema
 (
-    name = "NewsSource Model", 
-    description = "Client model representing a news source obtained from the news client API."
+    name = "NewsSourceDto - Internal", 
+    description = "Internal dto representing a news source obtained from the news client API. Used to transfer news source data between services"
 )
+
 @Data
 @AllArgsConstructor
-public class Source {
+@Builder
+public class NewsSourceDto {
 
     @Schema
     (
@@ -23,6 +30,7 @@ public class Source {
         description = "Unique identifier for the news source.",
         example = "abc-news" // Example value for id
     )
+    @NotNull(message = "News source ID cannot be null")
     private String id;
 
     @Schema
@@ -31,6 +39,7 @@ public class Source {
         description = "Name of the news source.",
         example = "ABC News" // Example value for name
     )
+    @NotNull(message = "News source name cannot be null")
     private String name;
 
     @Schema
@@ -55,7 +64,7 @@ public class Source {
         description = "Category of the news source.",
         example = "general" // Example value for category
     )
-    private String category;
+    private Category category;
 
     @Schema
     (
@@ -63,7 +72,7 @@ public class Source {
         description = "Language of the news source.",
         example = "en" // Example value for language
     )
-    private String language;
+    private Language language;
 
     @Schema
     (
@@ -71,5 +80,5 @@ public class Source {
         description = "Country of the news source.",
         example = "us" // Example value for country
     )
-    private String country;
+    private Country country;
 }
