@@ -1,6 +1,6 @@
 spring:
   application:
-    name: news-fetcher-service (PROD)
+    name: news-fetcher-service-prod
   config:
     activate:
       on-profile: PROD
@@ -23,9 +23,9 @@ spring:
 server:
   port: ${SERVER_PORT:8080}
     
-build:
-  info:
-    name: News Fetcher Service
+info:
+  app:
+    name: news-fetcher-service-prod
     description: A service to fetch news from external APIs
     version: 1.0.0
 
