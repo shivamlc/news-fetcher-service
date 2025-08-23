@@ -1,10 +1,15 @@
 package com.sg_tech.news_fetcher_service.feign_client.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.sg_tech.news_fetcher_service.external_news_client.dto.internal.NewsSourceDto;
 import com.sg_tech.news_fetcher_service.external_news_client.enums.Country;
 import com.sg_tech.news_fetcher_service.external_news_client.mapper.NewsSourceMapper;
+import com.sg_tech.news_fetcher_service.external_news_client.model.Source;
 import com.sg_tech.news_fetcher_service.external_news_client.model.SourceRequest;
 import com.sg_tech.news_fetcher_service.external_news_client.model.SourceResponse;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
@@ -37,13 +42,14 @@ public class NewsSourceAggregatorServiceImpl implements INewsSourceAggregatorSer
                 .build();
         SourceResponse response = sourceServiceImpl.fetchSources(sourceRequest);
         if (response != null && response.getSources() != null) {
-            response.getSources().forEach(newsSource -> {
-                newsSourceAggregatorClient.saveNewsSources
-                (
-                    NewsSourceMapper.mapToDto(newsSource),
-                    requestSource
-                ); 
+            
+            List<Source> newsSources = response.getSources();
+            List<NewsSourceDto> newsSourceDtos = new ArrayList<>();
+            newsSources.forEach(newsSource -> {
+                NewsSourceDto dto = NewsSourceMapper.mapToDto(newsSource);
+                newsSourceDtos.add(dto);
             });
+            newsSourceAggregatorClient.saveNewsSources(newsSourceDtos, requestSource);
             return "News sources saved successfully.";
         }
         return "";
