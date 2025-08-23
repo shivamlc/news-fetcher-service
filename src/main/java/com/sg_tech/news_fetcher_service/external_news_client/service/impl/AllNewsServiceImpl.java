@@ -100,7 +100,7 @@ public class AllNewsServiceImpl extends BaseNewsClient implements IAllNewsArticl
 
         System.out.println("Response Status: " + response.getStatus());
         System.out.println("Total Results: " + response.getTotalResults());
-        System.out.println("Articles: " + response.getArticles().length);
+        System.out.println("Articles: " + response.getArticles().size());
         return response;
     }
 

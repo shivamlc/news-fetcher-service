@@ -12,11 +12,13 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Schema(name = "TopHeadlinesRequest Model", description = "Client model for fetching top headlines from the news client API.")
 @Data
 @AllArgsConstructor
+@Builder
 public class TopHeadlinesRequest {
 
     @Schema
