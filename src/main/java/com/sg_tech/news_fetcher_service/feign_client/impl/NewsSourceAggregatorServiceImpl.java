@@ -35,7 +35,7 @@ public class NewsSourceAggregatorServiceImpl implements INewsSourceAggregatorSer
 
     @Override
     @Order(1)
-    @Scheduled(fixedRate = 3600000) // Example: fetch news sources every 60 minutes
+    @Scheduled(fixedRate = 300000) // Example: fetch news sources every 5 minutes
     public String saveNewsSources() {
         SourceRequest sourceRequest = SourceRequest.builder()
                 .category(null) // Set category if needed
