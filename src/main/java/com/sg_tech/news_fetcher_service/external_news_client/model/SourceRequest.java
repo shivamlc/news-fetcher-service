@@ -44,4 +44,10 @@ public class SourceRequest {
     )
     @Nullable
     private Country country;
+
+    @Override
+    public String toString() {
+        return String.format("SourceRequest{category=%s, language=%s, country=%s}",
+                category, language, country);
+    }
 }

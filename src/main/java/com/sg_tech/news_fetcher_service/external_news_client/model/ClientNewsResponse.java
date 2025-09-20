@@ -1,6 +1,8 @@
 package com.sg_tech.news_fetcher_service.external_news_client.model;
 
 
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -40,6 +42,6 @@ public class ClientNewsResponse {
             example = "[{\"source\": {\"id\": \"abc-news\", \"name\": \"ABC News\"}, \"author\": \"John Doe\", \"title\": \"Breaking News\", \"description\": \"Latest updates on the news.\", \"url\": \"https://abcnews.go.com\", \"urlToImage\": \"https://abcnews.go.com/image.jpg\", \"publishedAt\": \"2023-01-01T00:00:00Z\", \"content\": \"Full content of the article.\"}]"
         )
     )
-    private Article[] articles;
+    private List<Article> articles;
     
 }
