@@ -256,3 +256,14 @@ docker-compose up
 # Pull and run from Docker Hub
 docker run --env-file .env -p 8080:8080 sgaurtech/news-fetcher-service:latest
 ```
+
+## TODO:
+- add unit / integration tests
+- update documentation
+- add more feign clients as needed
+- send logs to NR / cloudwatch
+- add loadbalancer
+- host on aws using kubernetes
+- add event driven functionality using rabbit mq / kafka?
+- separate out mcp server functionality?
+- add doco aroud mcp server
