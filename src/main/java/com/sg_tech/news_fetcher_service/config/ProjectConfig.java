@@ -11,6 +11,23 @@ import com.sg_tech.news_fetcher_service.external_news_client.service.INewsClient
 import com.sg_tech.news_fetcher_service.external_news_client.service.ISourceService;
 import com.sg_tech.news_fetcher_service.external_news_client.service.ITopHeadlinesService;
 
+// ProjetcConfig class - provides project level configs.
+/*@Configuration:
+ * Purpose: Marks a class as a source of Spring bean definitions.
+
+Think of it as: “This class configures beans for the application context.”
+
+Equivalent to: The old <beans> XML configuration.
+
+@EnableAspectJAutoProxy
+What is @EnableAspectJAutoProxy?
+
+A Spring annotation that enables support for handling components marked with @Aspect (from org.aspectj.lang.annotation).
+
+It tells Spring to look for @Aspect classes and create proxies around beans where pointcuts are matched.
+
+Basically: “Turn on AOP proxying so aspects can intercept method calls.”
+ */
 @Configuration
 @EnableAspectJAutoProxy
 public class ProjectConfig {
