@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.sg_tech.news_fetcher_service.external_news_client.dto.api.ApiErrorDto;
 
 @ControllerAdvice(basePackages = "com.sg_tech.news_fetcher_service.external_news_client.controller")
-public class ExternslNewsClientExceptionHandler extends ResponseEntityExceptionHandler {
+public class ExternalNewsClientExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
